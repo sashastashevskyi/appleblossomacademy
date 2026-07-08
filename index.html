@@ -162,8 +162,14 @@ header.site-header.scrolled{
   box-shadow:var(--shadow-sm);
   padding:8px 0;
 }
-.nav-inner{display:flex; align-items:center; justify-content:space-between; gap:20px;}
-.brand{display:flex; align-items:center; gap:12px; font-family:var(--font-display); font-weight:700; font-size:1.15rem;}
+.nav-inner{display:flex; align-items:center; justify-content:flex-start; gap:16px;}
+.brand{display:flex; align-items:center; gap:11px; font-family:var(--font-display); font-weight:700; font-size:1.02rem; flex:none;}
+.brand-text{white-space:nowrap; line-height:1.2;}
+.main-nav{margin-left:auto;}
+/* Desktop: the header CTA is the only "Enroll" — the duplicate nav pill lives only in the mobile drawer */
+@media (min-width:861px){
+  .main-nav a.nav-enroll{display:none;}
+}
 .brand img{width:72px; height:72px; object-fit:contain; transition:width .35s var(--ease), height .35s var(--ease), transform .4s var(--ease); filter:drop-shadow(0 4px 10px rgba(27,58,92,.18));}
 header.site-header.scrolled .brand img{width:54px; height:54px;}
 .brand:hover img{transform:rotate(-8deg) scale(1.08);}
@@ -932,7 +938,7 @@ html[data-lang="uk"] .lang-en{display:none !important;}
       <a href="#ages" style="--navbg:var(--green); --navink:#fff; --navsh:rgba(107,203,119,.5)"><span class="lang-en">Age Groups</span><span class="lang-uk">Групи</span></a>
       <a href="#programs" style="--navbg:var(--blue); --navink:#fff; --navsh:rgba(77,150,255,.48)"><span class="lang-en">Our Programs</span><span class="lang-uk">Наші програми</span></a>
       <a href="#health" style="--navbg:var(--green); --navink:#fff; --navsh:rgba(107,203,119,.5)"><span class="lang-en">Health</span><span class="lang-uk">Здоров'я</span></a>
-      <a href="#enroll" style="--navbg:var(--coral); --navink:#fff; --navsh:rgba(255,107,107,.45)"><span class="lang-en">Enroll</span><span class="lang-uk">Записатись</span></a>
+      <a href="#enroll" class="nav-enroll" style="--navbg:var(--coral); --navink:#fff; --navsh:rgba(255,107,107,.45)"><span class="lang-en">Enroll</span><span class="lang-uk">Записатись</span></a>
     </nav>
 
     <div class="header-actions">
