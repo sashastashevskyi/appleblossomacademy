@@ -172,7 +172,8 @@ header.site-header.scrolled .brand img{width:54px; height:54px;}
 /* Desktop nav: quiet colored pills — only the Enroll CTA dominates */
 .main-nav{display:flex; align-items:center; gap:6px;}
 .main-nav a{
-  position:relative; padding:7px 14px; border-radius:999px; font-weight:700; font-size:.8rem;
+  position:relative; padding:clamp(8px,.8vw,12px) clamp(13px,1.4vw,20px); border-radius:999px;
+  font-weight:700; font-size:clamp(.78rem,.95vw,.92rem); white-space:nowrap;
   display:flex; align-items:center; gap:7px; color:var(--navink, #333);
   background:var(--navbg, transparent);
   transition:filter .25s var(--ease), transform .25s var(--ease);
@@ -277,9 +278,11 @@ header.site-header.scrolled .brand img{width:54px; height:54px;}
   0%,100%{opacity:0; transform:scale(.3);}
   50%{opacity:.9; transform:scale(1);}
 }
-/* Header brand logo appears only once the glass header kicks in — the sun carries the brand at the top */
+/* Brand (logo + name) appears only once the glass header kicks in — the sun-logo owns the top of the hero */
 header.site-header:not(.scrolled) .brand img{opacity:0; transform:scale(.5);}
 .brand img{transition:opacity .4s var(--ease), width .35s var(--ease), height .35s var(--ease), transform .4s var(--ease);}
+.brand-text{transition:opacity .4s var(--ease);}
+header.site-header:not(.scrolled) .brand-text{opacity:0;}
 @media (prefers-reduced-motion: reduce){ .hero-sun .rays, .hero-sun .rays g, .hero-sun .sun-logo, .spark{animation:none;} .spark{opacity:.6;} }
 
 /* Birds: distant, occasional glide across the sky */
@@ -592,19 +595,6 @@ header.site-header:not(.scrolled) .brand img{opacity:0; transform:scale(.5);}
 .gallery-item:hover img{transform:scale(1.08);}
 .gallery-item.big{grid-column:span 2; grid-row:span 2;}
 
-/* ===== Promise / trust section (replaces fabricated testimonials) ===== */
-.promise-section{background:#1B3A5C; color:#fff; position:relative; overflow:hidden;}
-.promise-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:30px; margin-top:20px;}
-.promise-card{
-  background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); border-radius:var(--radius-md);
-  padding:30px 26px; backdrop-filter:blur(6px);
-}
-.promise-card .num{font-family:var(--font-display); font-size:2.2rem; color:var(--amber); margin-bottom:10px; display:block;}
-.promise-card h3{font-size:1.1rem; margin-bottom:8px; color:#fff;}
-.promise-card p{font-size:.88rem; color:rgba(255,255,255,.72);}
-.promise-section .section-head h2, .promise-section .section-head p{color:#fff;}
-.promise-section .section-head p{color:rgba(255,255,255,.72);}
-
 /* ===== FAQ ===== */
 .faq-section{background:#FFFBF3;}
 .faq-list{max-width:800px; margin:0 auto; display:grid; gap:14px;}
@@ -807,7 +797,6 @@ footer.site-footer{background:#1B3A5C; color:rgba(255,255,255,.82); padding:60px
   .health-grid, .health-grid.rev{grid-template-columns:1fr;}
   .health-grid.rev .health-img{order:0;}
   .enroll-grid{grid-template-columns:1fr;}
-  .promise-grid{grid-template-columns:1fr;}
   .footer-grid{grid-template-columns:1fr 1fr;}
 }
 @media (max-width:860px){
@@ -1039,11 +1028,6 @@ html[data-lang="uk"] .lang-en{display:none !important;}
   </svg>
 
   <div class="hero-content container">
-    <span class="hero-eyebrow">
-      <svg class="ico sm a-pulse" style="color:var(--coral)"><use href="#i-blossom"/></svg>
-      <span class="lang-en">Jacksonville, Florida · Now Enrolling</span>
-      <span class="lang-uk">Джексонвіл, Флорида · Триває набір</span>
-    </span>
     <h1>
       <span class="lang-en"><span class="h1-lead">Childcare</span> <span class="accent">Apple Blossom Academy</span> <span class="h1-tail">in Jacksonville</span></span>
       <span class="lang-uk"><span class="h1-lead">Дитячий садочок</span> <span class="accent">Apple Blossom Academy</span> <span class="h1-tail">у Джексонвілі</span></span>
@@ -1571,42 +1555,6 @@ html[data-lang="uk"] .lang-en{display:none !important;}
       <div class="gallery-item reveal-scale"><img src="img/site/culture-1.jpg" alt="Teacher in Ukrainian embroidered shirt with students" loading="lazy" width="300" height="160"></div>
       <div class="gallery-item reveal-scale"><img src="img/site/playroom-1.jpg" alt="Children playing together in a bright playroom" loading="lazy" width="300" height="160"></div>
       <div class="gallery-item reveal-scale"><img src="img/site/props-heritage.jpg" alt="Ukrainian-inspired decor: embroidery, wooden blocks, apple blossom map" loading="lazy" width="300" height="160"></div>
-    </div>
-  </div>
-</section>
-
-<!-- ===================== PROMISE (replaces fabricated testimonials) ===================== -->
-<section class="section promise-section">
-  <div class="deco-layer" aria-hidden="true">
-    <svg class="float-el" style="top:10%; left:6%; width:100px; opacity:.08; animation:spinSlow 40s linear infinite;" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="none" stroke="#fff" stroke-width="2" stroke-dasharray="6 10"/></svg>
-  </div>
-  <div class="container">
-    <div class="section-head reveal">
-      <span class="eyebrow" style="background:rgba(255,217,61,.18); color:var(--amber);">
-        <span class="lang-en">Our Promise</span><span class="lang-uk">Наша обіцянка</span>
-      </span>
-      <h2><span class="lang-en">Built for the first families of Apple Blossom</span><span class="lang-uk">Створено для перших родин Apple Blossom</span></h2>
-      <p><span class="lang-en">We are a new academy opening our doors in Jacksonville. Every standard below is a promise we make to the families joining our founding year.</span><span class="lang-uk">Ми — новий садочок, який відкриває свої двері в Джексонвілі. Кожен стандарт нижче — це обіцянка родинам нашого першого року.</span></p>
-    </div>
-    <div class="promise-grid stagger">
-      <div class="promise-card reveal">
-        <span class="num">01</span>
-        <h3 class="lang-en">Led by a Physician</h3><h3 class="lang-uk">Під керівництвом лікаря</h3>
-        <p class="lang-en">Our founder spent 25 years in pediatric practice and wrote our health and nutrition standards herself.</p>
-        <p class="lang-uk">Кожен стандарт здоров'я та харчування розроблений лікарем з 25-річним досвідом.</p>
-      </div>
-      <div class="promise-card reveal">
-        <span class="num">02</span>
-        <h3 class="lang-en">True Bilingual Immersion</h3><h3 class="lang-uk">Справжнє двомовне занурення</h3>
-        <p class="lang-en">Ukrainian and English are part of every song, story, and lesson, all day long.</p>
-        <p class="lang-uk">Українська та англійська — в кожній пісні, історії та уроці.</p>
-      </div>
-      <div class="promise-card reveal">
-        <span class="num">03</span>
-        <h3 class="lang-en">A Founding Family Welcome</h3><h3 class="lang-uk">Родина-засновниця</h3>
-        <p class="lang-en">The first families to join will help shape our traditions, holidays, and classroom culture.</p>
-        <p class="lang-uk">Перші родини допомагають формувати наші традиції та атмосферу з першого дня.</p>
-      </div>
     </div>
   </div>
 </section>
