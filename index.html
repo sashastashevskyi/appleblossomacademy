@@ -42,12 +42,20 @@
   "image": "img/site/founder.jpg",
   "address": {
     "@type": "PostalAddress",
+    "streetAddress": "12246 San Jose Blvd",
     "addressLocality": "Jacksonville",
     "addressRegion": "FL",
+    "postalCode": "32223",
     "addressCountry": "US"
   },
   "areaServed": "Jacksonville, FL",
-  "openingHours": "Mo-Fr 07:00-18:00",
+  "telephone": "+1-240-706-1704",
+  "email": "childcare.aba@gmail.com",
+  "founder": {
+    "@type": "Person",
+    "name": "Viktoria Malashonok",
+    "jobTitle": "Founder & Director"
+  },
   "sameAs": []
 }
 </script>
@@ -312,7 +320,7 @@ header.site-header:not(.scrolled) .brand-text{opacity:0;}
 #hillFlora, #grassFront{animation:grassWave 5.5s ease-in-out infinite; transform-origin:50% 100%;}
 @keyframes grassWave{0%,100%{transform:skewX(-1.6deg);} 50%{transform:skewX(2deg);}}
 @media (prefers-reduced-motion: reduce){ .tree-crown, #hillFlora, #grassFront{animation:none;} }
-.hero-content{position:relative; z-index:7; text-align:center; max-width:900px; margin:0 auto;}
+.hero-content{position:relative; z-index:7; text-align:center; max-width:900px; margin:-7vh auto 0;}
 .hero-eyebrow{
   display:inline-flex; align-items:center; gap:8px; background:rgba(255,255,255,.55); backdrop-filter:blur(8px);
   padding:7px 16px; border-radius:999px; font-weight:800; font-size:.7rem; letter-spacing:.07em;
@@ -394,7 +402,7 @@ header.site-header:not(.scrolled) .brand-text{opacity:0;}
 }
 
 /* ===== Section shells ===== */
-.section{padding:clamp(70px,10vw,140px) 0; position:relative; overflow:hidden;}
+.section{padding:clamp(46px,5vw,80px) 0; position:relative; overflow:hidden;}
 .section-wave-top{position:absolute; top:-1px; left:0; width:100%; line-height:0;}
 .section-wave-bottom{position:absolute; bottom:-1px; left:0; width:100%; line-height:0; transform:scaleY(-1);}
 .eyebrow{
@@ -418,9 +426,16 @@ header.site-header:not(.scrolled) .brand-text{opacity:0;}
 .stagger .reveal:nth-child(6){transition-delay:.52s;}
 
 /* ===== Who We Are ===== */
-.who-section{background:#FFFBF3;}
-.who-grid{display:grid; grid-template-columns:0.85fr 1.15fr; gap:clamp(30px,6vw,80px); align-items:center;}
-.who-photo-wrap{position:relative;}
+.who-section{background:linear-gradient(180deg,#FFFBF3,#FFF6EC);}
+.who-grid{
+  display:grid; align-items:center; column-gap:clamp(30px,5vw,70px); row-gap:0;
+  grid-template-columns:minmax(260px,380px) 1fr;
+  grid-template-areas:"photo head" "photo text";
+}
+.who-head{grid-area:head; align-self:end;}
+.who-head h2{font-size:clamp(1.9rem,4vw,2.7rem); color:#1B3A5C; margin-bottom:20px;}
+.who-text{grid-area:text; align-self:start;}
+.who-photo-wrap{grid-area:photo; position:relative; max-width:380px;}
 .who-photo{
   border-radius:var(--radius-lg); overflow:hidden; box-shadow:var(--shadow-lg);
   border:8px solid var(--amber); aspect-ratio:4/5; object-fit:cover;
@@ -441,7 +456,7 @@ header.site-header:not(.scrolled) .brand-text{opacity:0;}
 .who-signature .role{font-size:.82rem; color:var(--ink-faint); font-weight:600;}
 
 /* ===== Why choose us ===== */
-.why-section{background:linear-gradient(180deg,#FFFBF3,#FFF3F0);}
+.why-section{background:linear-gradient(180deg,#FFFBF3,#FFF2EF);}
 .why-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:24px;}
 .why-card{
   background:var(--white); border-radius:var(--radius-md); padding:32px 26px; box-shadow:var(--shadow-sm);
@@ -467,7 +482,7 @@ header.site-header:not(.scrolled) .brand-text{opacity:0;}
 .why-card.blue{--icon-bg:rgba(77,150,255,.16); --card-tint:rgba(77,150,255,.05);}
 
 /* ===== Programs ===== */
-.programs-section{background:#FFFBF3;}
+.programs-section{background:linear-gradient(180deg,#ECF4FF,#EEF9F0);}
 /* Expandable program accordion: 2x2 grid, each card grows on click */
 .programs-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:22px; align-items:start;}
 .program-card{
@@ -497,8 +512,11 @@ header.site-header:not(.scrolled) .brand-text{opacity:0;}
   background:var(--pcbg, rgba(0,0,0,.05)); color:var(--pc, var(--ink)); transition:transform .4s var(--ease);
 }
 .program-card.open .program-plus{transform:rotate(180deg);}
-.program-detail{max-height:0; overflow:hidden; transition:max-height .55s var(--ease-soft);}
-.program-detail-inner{padding:0 22px 24px; color:var(--ink-soft); font-size:.94rem;}
+.program-detail{display:grid; grid-template-rows:0fr; transition:grid-template-rows .5s var(--ease-soft);}
+.program-card.open .program-detail{grid-template-rows:1fr;}
+.program-detail > .program-detail-inner{min-height:0; overflow:hidden;}
+.program-detail-inner{padding:0 22px; color:var(--ink-soft); font-size:.94rem; transition:padding .5s var(--ease-soft);}
+.program-card.open .program-detail-inner{padding:2px 22px 24px;}
 .program-detail-inner p{margin-bottom:12px;}
 .program-detail-inner ul{display:grid; gap:8px; margin-top:6px;}
 .program-detail-inner li{display:flex; gap:10px; align-items:flex-start;}
@@ -506,7 +524,7 @@ header.site-header:not(.scrolled) .brand-text{opacity:0;}
 .program-detail-inner .detail-hd{font-family:var(--font-display); font-weight:600; color:#1B3A5C; font-size:1.02rem; margin:4px 0 10px;}
 
 /* ===== Age groups ===== */
-.ages-section{background:linear-gradient(180deg,#FFF3F0,#EAF6FF);}
+.ages-section{background:linear-gradient(180deg,#FFF1F0,#ECF4FF);}
 .ages-tabs{display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-bottom:44px;}
 .age-tab{
   padding:11px 22px; border-radius:999px; font-weight:800; font-size:.86rem; background:var(--white);
@@ -528,28 +546,113 @@ header.site-header:not(.scrolled) .brand-text{opacity:0;}
   display:flex; align-items:center; justify-content:center; font-size:.7rem; margin-top:2px;
 }
 
-/* ===== Teachers ===== */
-.team-section{background:#FFFBF3;}
-.team-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:26px;}
-.team-card{text-align:center;}
+/* ===== Teachers (horizontal carousel) ===== */
+.team-section{background:linear-gradient(180deg,#FFF6EC,#FFF1F0);}
+.team-carousel{position:relative; max-width:1120px; margin:0 auto;}
+.team-track{
+  display:flex; gap:24px; overflow-x:auto; scroll-snap-type:x mandatory;
+  padding:6px 4px 10px; margin:0 -4px;
+  -webkit-overflow-scrolling:touch; scrollbar-width:none; scroll-behavior:smooth;
+  /* Center the cards while they don't fill the track; "safe" falls back to start
+     alignment (no clipping) once there are enough teachers to scroll. */
+  justify-content:safe center;
+}
+.team-track::-webkit-scrollbar{display:none;}
+.team-card{
+  flex:0 0 300px; scroll-snap-align:center; text-align:center; cursor:pointer;
+  background:var(--white); border:none; font-family:inherit; color:inherit;
+  padding:20px 20px 24px; border-radius:var(--radius-md); box-shadow:var(--shadow-sm);
+  transition:transform .35s var(--ease), box-shadow .35s var(--ease);
+}
+.team-card:hover{transform:translateY(-6px); box-shadow:var(--shadow-lg);}
+.team-card:focus-visible{outline:3px solid var(--blue); outline-offset:4px;}
+.team-more{
+  display:inline-flex; align-items:center; gap:6px; margin-top:14px; font-weight:800; font-size:.82rem;
+  color:var(--coral); transition:gap .25s var(--ease);
+}
+.team-card:hover .team-more{gap:10px;}
+/* Carousel arrows */
+.team-nav{
+  position:absolute; top:38%; z-index:3; width:48px; height:48px; border-radius:50%;
+  background:var(--white); box-shadow:var(--shadow-md); display:flex; align-items:center; justify-content:center;
+  color:#1B3A5C; transition:transform .25s var(--ease), background .25s var(--ease), opacity .25s var(--ease);
+}
+.team-nav:hover{background:var(--coral); color:#fff; transform:scale(1.08);}
+.team-nav.prev{left:-10px;}
+.team-nav.next{right:-10px;}
+.team-nav.prev .nav-chev{transform:rotate(90deg);}
+.team-nav.next .nav-chev{transform:rotate(-90deg);}
+.team-nav[disabled]{opacity:0; pointer-events:none;}
+.team-nav svg{width:22px; height:22px;}
+@media (max-width:1180px){ .team-nav.prev{left:4px;} .team-nav.next{right:4px;} }
+
+/* Teacher story modal */
+.team-modal{position:fixed; inset:0; z-index:400; display:flex; align-items:center; justify-content:center; padding:20px;}
+.team-modal[hidden]{display:none;}
+.tm-backdrop{
+  position:absolute; inset:0; background:rgba(27,58,92,.5);
+  backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
+  animation:tmFade .3s var(--ease);
+}
+@keyframes tmFade{from{opacity:0;} to{opacity:1;}}
+.tm-card{
+  position:relative; background:var(--white); border-radius:var(--radius-lg); box-shadow:var(--shadow-lg);
+  max-width:760px; width:100%; max-height:86vh; overflow:hidden;
+  display:grid; grid-template-columns:280px 1fr;
+  animation:tmCardIn .5s var(--ease) both;
+}
+@keyframes tmCardIn{
+  from{opacity:0; transform:translateY(30px) scale(.94);}
+  to{opacity:1; transform:translateY(0) scale(1);}
+}
+.tm-photo{position:relative; overflow:hidden;}
+.tm-photo img{width:100%; height:100%; object-fit:cover; object-position:center top; min-height:100%; animation:tmPhotoIn .7s var(--ease) both;}
+@keyframes tmPhotoIn{from{transform:scale(1.12);} to{transform:scale(1);}}
+.tm-body{padding:34px 34px 30px; overflow-y:auto; max-height:86vh;}
+.tm-body > *{animation:tmRise .5s var(--ease) both;}
+.tm-body h3{animation-delay:.12s;}
+.tm-body .role{animation-delay:.18s;}
+.tm-body .tm-story{animation-delay:.24s;}
+@keyframes tmRise{from{opacity:0; transform:translateY(14px);} to{opacity:1; transform:translateY(0);}}
+.team-modal.closing .tm-card{animation:tmCardOut .3s var(--ease) both;}
+.team-modal.closing .tm-backdrop{animation:tmFadeOut .3s var(--ease) both;}
+@keyframes tmCardOut{from{opacity:1; transform:translateY(0) scale(1);} to{opacity:0; transform:translateY(20px) scale(.96);}}
+@keyframes tmFadeOut{from{opacity:1;} to{opacity:0;}}
+@media (prefers-reduced-motion: reduce){
+  .tm-card,.tm-photo img,.tm-body>*,.team-modal.closing .tm-card,.team-modal.closing .tm-backdrop{animation:none;}
+}
+.tm-body h3{font-size:1.5rem; color:#1B3A5C; margin-bottom:4px;}
+.tm-body .role{font-size:.85rem; color:var(--coral); font-weight:800; margin-bottom:18px;}
+.tm-story p{color:var(--ink-soft); font-size:.95rem; margin-bottom:14px;}
+.tm-story p:first-of-type::before{
+  content:'\201C'; font-family:var(--font-display); font-size:2.6rem; color:var(--amber);
+  line-height:0; vertical-align:-14px; margin-right:6px;
+}
+.tm-close{
+  position:absolute; top:14px; right:14px; z-index:2; width:38px; height:38px; border-radius:50%;
+  background:rgba(255,255,255,.9); box-shadow:var(--shadow-sm); font-size:1rem; font-weight:700; color:var(--ink);
+  display:flex; align-items:center; justify-content:center; transition:transform .25s var(--ease), background .25s var(--ease);
+}
+.tm-close:hover{background:var(--coral); color:#fff; transform:rotate(90deg);}
+@media (max-width:680px){
+  .tm-card{grid-template-columns:1fr; max-height:88vh;}
+  /* Portrait-friendly crop so both head and torso show, head never clipped at the top */
+  .tm-photo img{aspect-ratio:4/5; min-height:0; object-position:center 22%;}
+  .tm-body{padding:24px 22px;}
+}
 .team-photo{
-  border-radius:28px; overflow:hidden; aspect-ratio:1/1; margin-bottom:18px; box-shadow:var(--shadow-md);
-  position:relative;
+  width:150px; height:150px; border-radius:50%; overflow:hidden; margin:0 auto 16px;
+  box-shadow:var(--shadow-md); position:relative; border:4px solid var(--white);
+  outline:3px solid rgba(255,217,61,.5);
 }
 .team-photo img{width:100%; height:100%; object-fit:cover; transition:transform .5s var(--ease);}
-.team-card:hover .team-photo img{transform:scale(1.06);}
-.team-avatar{
-  width:100%; height:100%; display:flex; align-items:center; justify-content:center;
-  font-family:var(--font-display); font-weight:700; font-size:2.6rem; color:#fff;
-}
-.team-card h3{font-size:1.1rem; color:#1B3A5C; margin-bottom:4px;}
-.team-card .role{font-size:.82rem; color:var(--coral); font-weight:700; margin-bottom:10px;}
-.team-card p{font-size:.86rem; color:var(--ink-soft);}
-.team-langs{display:flex; gap:6px; justify-content:center; margin-top:10px; flex-wrap:wrap;}
-.team-langs span{font-size:.68rem; font-weight:800; background:rgba(0,0,0,.05); padding:4px 10px; border-radius:999px; color:var(--ink-soft);}
+.team-card:hover .team-photo img{transform:scale(1.08);}
+.team-card h3{font-size:1.15rem; color:#1B3A5C; margin-bottom:4px;}
+.team-card .role{font-size:.82rem; color:var(--coral); font-weight:700; margin-bottom:12px;}
+.team-card p{font-size:.88rem; color:var(--ink-soft);}
 
 /* ===== Health ===== */
-.health-section{background:linear-gradient(180deg,#EAF6FF,#F2FBF3);}
+.health-section{background:linear-gradient(180deg,#EEF9F0,#F1FAF3);}
 .health-grid{display:grid; grid-template-columns:1.1fr .9fr; gap:clamp(30px,6vw,70px); align-items:center; margin-bottom:80px;}
 .health-grid.rev{grid-template-columns:.9fr 1.1fr;}
 .health-grid.rev .health-img{order:2;}
@@ -583,7 +686,7 @@ header.site-header:not(.scrolled) .brand-text{opacity:0;}
 @media (max-width:760px){ .safety-strip{grid-template-columns:1fr; gap:16px;} }
 
 /* ===== Daily life timeline ===== */
-.daily-section{background:#FFFBF3;}
+.daily-section{background:linear-gradient(180deg,#F1FAF3,#FFFBF3);}
 .timeline{display:grid; grid-template-columns:repeat(4,1fr); gap:22px;}
 .time-card{background:var(--white); border-radius:20px; padding:24px 20px; box-shadow:var(--shadow-sm); text-align:center; transition:transform .35s var(--ease);}
 .time-card:hover{transform:translateY(-6px);}
@@ -592,7 +695,7 @@ header.site-header:not(.scrolled) .brand-text{opacity:0;}
 .time-card p{font-size:.82rem; color:var(--ink-soft);}
 
 /* ===== Gallery ===== */
-.gallery-section{background:linear-gradient(180deg,#FFFBF3,#FFF3F0);}
+.gallery-section{background:linear-gradient(180deg,#FFFBF3,#FFF2EF);}
 .gallery-grid{
   display:grid; grid-template-columns:repeat(4,1fr); grid-auto-rows:160px; gap:16px;
 }
@@ -601,25 +704,8 @@ header.site-header:not(.scrolled) .brand-text{opacity:0;}
 .gallery-item:hover img{transform:scale(1.08);}
 .gallery-item.big{grid-column:span 2; grid-row:span 2;}
 
-/* ===== FAQ ===== */
-.faq-section{background:#FFFBF3;}
-.faq-list{max-width:800px; margin:0 auto; display:grid; gap:14px;}
-.faq-item{background:var(--white); border-radius:18px; box-shadow:var(--shadow-sm); overflow:hidden;}
-.faq-q{
-  width:100%; display:flex; justify-content:space-between; align-items:center; gap:16px;
-  padding:20px 24px; font-weight:700; font-size:1rem; color:#1B3A5C; text-align:left;
-}
-.faq-q .plus{
-  width:28px; height:28px; border-radius:50%; background:rgba(255,107,107,.12); color:var(--coral);
-  display:flex; align-items:center; justify-content:center; flex:none; transition:transform .35s var(--ease);
-  font-size:1.1rem; font-weight:800;
-}
-.faq-item[aria-expanded="true"] .plus{transform:rotate(135deg);}
-.faq-a{max-height:0; overflow:hidden; transition:max-height .4s var(--ease-soft);}
-.faq-a p{padding:0 24px 22px; color:var(--ink-soft); font-size:.94rem;}
-
 /* ===== Enroll ===== */
-.enroll-section{background:linear-gradient(180deg,#FFF3F0,#FFFBF3); position:relative;}
+.enroll-section{background:linear-gradient(180deg,#FFF2EF,#FFFBF3); position:relative;}
 .mandatory-box{
   background:var(--amber); border-radius:var(--radius-lg); padding:clamp(28px,5vw,48px); margin-bottom:70px;
   box-shadow:var(--shadow-md); position:relative; overflow:hidden;
@@ -798,8 +884,8 @@ footer.site-footer{background:#1B3A5C; color:rgba(255,255,255,.82); padding:60px
   .team-grid{grid-template-columns:repeat(2,1fr);}
   .timeline{grid-template-columns:repeat(2,1fr);}
   .gallery-grid{grid-template-columns:repeat(3,1fr);}
-  .who-grid{grid-template-columns:1fr;}
-  .who-photo-wrap{max-width:420px; margin:0 auto;}
+  .who-grid{grid-template-columns:1fr; grid-template-areas:"head" "photo" "text"; row-gap:30px;}
+  .who-photo-wrap{max-width:340px; margin:0 auto;}
   .health-grid, .health-grid.rev{grid-template-columns:1fr;}
   .health-grid.rev .health-img{order:0;}
   .enroll-grid{grid-template-columns:1fr;}
@@ -828,12 +914,17 @@ footer.site-footer{background:#1B3A5C; color:rgba(255,255,255,.82); padding:60px
   .hero-badge-row{margin-top:30px;}
   .sticky-cta{display:flex;}
   body{padding-bottom:0;}
-  /* Founder: text before photo, photo smaller and calmer */
-  .who-grid{gap:34px;}
-  .who-photo-wrap{order:2; max-width:300px;}
+  /* Founder: heading first, then a smaller photo, then her story */
+  .who-grid{
+    grid-template-columns:1fr; row-gap:28px;
+    grid-template-areas:"head" "photo" "text";
+  }
+  .who-head{align-self:auto; text-align:center;}
+  .who-head h2{margin-bottom:0;}
+  .who-photo-wrap{max-width:250px; margin:0 auto;}
   .who-photo{border-width:6px; transform:rotate(0); aspect-ratio:1/1; object-fit:cover;}
-  .who-photo-badge{bottom:-16px; right:-10px; padding:12px 16px;}
-  .who-photo-badge strong{font-size:1.4rem;}
+  .who-photo-badge{bottom:-14px; right:-8px; padding:10px 14px;}
+  .who-photo-badge strong{font-size:1.3rem;}
   .stats-grid{grid-template-columns:repeat(2,1fr); gap:28px 12px;}
   /* Daily timeline becomes swipeable */
   .timeline{
@@ -1040,7 +1131,6 @@ html[data-lang="uk"] .lang-en{display:none !important;}
     </h1>
     <div class="hero-actions">
       <a href="#enroll" class="cta-btn"><span class="lang-en">Book a Free Tour</span><span class="lang-uk">Записатись на екскурсію</span> <span aria-hidden="true">→</span></a>
-      <a href="#about" class="cta-btn ghost"><span class="lang-en">Meet the Academy</span><span class="lang-uk">Дізнатись більше</span></a>
     </div>
   </div>
 
@@ -1114,11 +1204,7 @@ html[data-lang="uk"] .lang-en{display:none !important;}
 <section class="section why-section">
   <div class="container">
     <div class="section-head reveal">
-      <span class="eyebrow" style="background:rgba(255,107,107,.12); color:var(--coral);">
-        <span class="lang-en">Why Choose Us</span><span class="lang-uk">Чому обрати нас</span>
-      </span>
       <h2><span class="lang-en">Why families choose Apple Blossom</span><span class="lang-uk">Чому обирають Apple Blossom</span></h2>
-      <p><span class="lang-en">Our unique approach is built on cultural identity, academic excellence, and whole-child wellbeing.</span><span class="lang-uk">Наш унікальний підхід спрямований на культурну ідентичність, академічну винятковість та загальне благополуччя.</span></p>
     </div>
     <div class="why-grid stagger">
       <div class="why-card coral reveal">
@@ -1177,8 +1263,14 @@ html[data-lang="uk"] .lang-en{display:none !important;}
 <section class="section who-section" id="about">
   <div class="container">
     <div class="who-grid">
+      <div class="who-head reveal">
+        <span class="eyebrow" style="background:rgba(255,217,61,.2); color:#8a6a00;">
+          <span class="lang-en">Who We Are</span><span class="lang-uk">Хто ми</span>
+        </span>
+        <h2><span class="lang-en">Where our story begins</span><span class="lang-uk">Із чого все почалося</span></h2>
+      </div>
       <div class="who-photo-wrap reveal-scale">
-        <img class="who-photo" src="img/site/founder.jpg" alt="Founder of Apple Blossom Academy, a pediatric endocrinologist and early-childhood advocate" loading="lazy" width="640" height="800">
+        <img class="who-photo" src="img/site/founder.jpg" alt="Viktoria Malashonok, founder of Apple Blossom Academy" loading="lazy" width="640" height="800">
         <div class="who-photo-badge">
           <strong>25+</strong>
           <span class="lang-en">Years in pediatric care</span>
@@ -1186,11 +1278,6 @@ html[data-lang="uk"] .lang-en{display:none !important;}
         </div>
       </div>
       <div class="who-text reveal">
-        <span class="eyebrow" style="background:rgba(255,217,61,.2); color:#8a6a00;">
-          <span class="lang-en">Who We Are</span><span class="lang-uk">Хто ми</span>
-        </span>
-        <h2><span class="lang-en">Where our story begins</span><span class="lang-uk">Із чого все почалося</span></h2>
-
         <p class="lang-en">I am a pediatric endocrinologist and nutritionist. I moved to the United States from Ukraine in 2020, after 25 years of treating children with endocrine conditions and supporting their families. That work taught me what children actually need at every age, and what helps them grow up healthy and happy.</p>
         <p class="lang-en">When the war began in Ukraine, many young families with small children arrived in the U.S. Watching them settle here, I saw how much they needed a good place for their kids: somewhere to learn and make friends, and somewhere to get real emotional support while adjusting to a new country.</p>
         <p class="lang-en">So we built Apple Blossom: a warm, safe place where every child is understood and hears their home language every day. Lessons, books, art, and music happen in two languages, and in a third when a family needs it.</p>
@@ -1203,8 +1290,8 @@ html[data-lang="uk"] .lang-en{display:none !important;}
           <div>
             <div class="name lang-en">Viktoria Malashonok</div>
             <div class="name lang-uk">Вікторія Малашонок</div>
-            <div class="role lang-en">Founder · Pediatric Endocrinologist &amp; Nutritionist</div>
-            <div class="role lang-uk">Засновниця · дитячий ендокринолог та дієтолог</div>
+            <div class="role lang-en">Founder &amp; Director</div>
+            <div class="role lang-uk">Засновниця, директор</div>
           </div>
         </div>
       </div>
@@ -1223,37 +1310,72 @@ html[data-lang="uk"] .lang-en{display:none !important;}
       <p><span class="lang-en">Caring, experienced educators who speak Ukrainian, English, and Russian.</span><span class="lang-uk">Турботливі, досвідчені педагоги, які володіють українською, англійською та російською мовами.</span></p>
     </div>
 
-    <div class="team-grid stagger">
-      <div class="team-card reveal">
-        <div class="team-photo"><img src="img/site/founder.jpg" alt="Viktoria Malashonok, founder and medical director of Apple Blossom Academy" loading="lazy" width="400" height="400"></div>
-        <h3 class="lang-en">Viktoria Malashonok</h3><h3 class="lang-uk">Вікторія Малашонок</h3>
-        <div class="role lang-en">Founder &amp; Medical Director</div><div class="role lang-uk">Засновниця, медичний директор</div>
-        <p class="lang-en">Pediatric endocrinologist &amp; nutritionist with 25+ years supporting children's health.</p>
-        <p class="lang-uk">Дитячий ендокринолог та дієтолог з 25+ роками досвіду підтримки здоров'я дітей.</p>
-      </div>
-
-      <div class="team-card reveal">
+    <div class="team-carousel reveal">
+      <button type="button" class="team-nav prev" id="teamPrev" aria-label="Previous teachers"><svg class="ico nav-chev"><use href="#i-chev"/></svg></button>
+      <button type="button" class="team-nav next" id="teamNext" aria-label="Next teachers"><svg class="ico nav-chev"><use href="#i-chev"/></svg></button>
+      <div class="team-track" id="teamTrack">
+      <button type="button" class="team-card" data-team-open>
         <div class="team-photo"><img src="img/site/teacher-lilia.jpg" alt="Lilia Lonina, Head Teacher at Apple Blossom Academy" loading="lazy" width="400" height="400"></div>
-        <h3>Lilia Lonina</h3>
+        <h3>Lilia Lonina<span class="lang-uk" style="display:none"></span></h3>
         <div class="role lang-en">Head Teacher</div><div class="role lang-uk">Головний вчитель</div>
         <p class="lang-en">Master's in Early Childhood Education, CDA Preschool Credential, 3+ years in U.S. preschools.</p>
         <p class="lang-uk">Магістр з відзнакою за спеціальністю «Дошкільна освіта», сертифікат CDA, 3+ роки досвіду в США.</p>
-      </div>
+        <span class="team-more"><span class="lang-en">My story</span><span class="lang-uk">Моя історія</span> →</span>
+        <div class="team-story" hidden>
+          <p class="lang-en">I'm an early-childhood teacher with international training and more than three years in the American preschool system. I hold a Master's in Early Childhood Education (with honors) and the Child Development Associate (CDA) Preschool Credential.</p>
+          <p class="lang-en">What I love most is helping little ones get ready for school, find their words, and grow into confident, curious children — especially our bilingual kids. I make every day warm and safe, so each child can discover what they're good at and fall in love with learning.</p>
+          <p class="lang-uk">Я — педагог дошкільної освіти з міжнародною підготовкою та понад трирічним досвідом роботи в американському садочку. Маю ступінь магістра з відзнакою за спеціальністю «Дошкільна освіта» та професійний сертифікат CDA (Child Development Associate).</p>
+          <p class="lang-uk">Найбільше люблю готувати малюків до школи, допомагати їм розвивати мовлення та зростати впевненими й допитливими — особливо нашим двомовним дітям. Я створюю тепле й безпечне середовище, де кожна дитина відкриває свої таланти і починає любити навчання.</p>
+        </div>
+      </button>
 
-      <div class="team-card reveal">
+      <button type="button" class="team-card" data-team-open>
         <div class="team-photo"><img src="img/site/teacher-tetiana.jpg" alt="Tetiana Dumiak, Art Teacher at Apple Blossom Academy" loading="lazy" width="400" height="400"></div>
         <h3 class="lang-en">Tetiana Dumiak</h3><h3 class="lang-uk">Тетяна Дум'як</h3>
         <div class="role lang-en">Art Teacher</div><div class="role lang-uk">Вчитель Арт-класу</div>
         <p class="lang-en">Professional artist since 2012, exhibiting with the Orange Park Arts Guild; 5+ years teaching children, including kids with autism and dyslexia.</p>
         <p class="lang-uk">Професійно малює з 2012 року, учасниця виставок Арт Гільдії Оранж Парку; 5+ років досвіду роботи з дітьми, зокрема з аутизмом та дислексією.</p>
-      </div>
+        <span class="team-more"><span class="lang-en">My story</span><span class="lang-uk">Моя історія</span> →</span>
+        <div class="team-story" hidden>
+          <p class="lang-en">I have lived and worked in several countries. I speak Ukrainian and Russian and am now mastering English. I am a member of the Orange Park Artists Guild, where I take part in exhibitions and competitions. I received my education, including my art education, in Ukraine.</p>
+          <p class="lang-en">I have been painting since 2012, professionally exploring different creative techniques, and my paintings have found homes with collectors. Alongside my own art, I help children with special needs — including autism and dyslexia — and have five years of teaching experience.</p>
+          <p class="lang-en">My core approach with children is to help them find the desire and motivation to learn, because talent can bloom in every child.</p>
+          <p class="lang-uk">Я жила і працювала в кількох країнах, розмовляю українською та російською, зараз освоюю англійську мову. Перебуваю в Арт-Гільдії художників Оранж Парку, беру участь у виставках та конкурсах. Освіту, у тому числі мистецьку, здобула в Україні.</p>
+          <p class="lang-uk">Малюванням займаюся з 2012 року, професійно пробую різні техніки творчості, маю досвід продажу своїх картин. Паралельно допомагаю дітям з особливими потребами — з аутизмом та дислексією, маю 5 років досвіду викладання.</p>
+          <p class="lang-uk">Мій головний підхід до дітей — це допомогти розвинути бажання та мотивацію до навчання, адже талант може відкритися в кожної дитини.</p>
+        </div>
+      </button>
 
-      <div class="team-card reveal">
+      <button type="button" class="team-card" data-team-open>
         <div class="team-photo"><img src="img/site/teacher-temur.jpg" alt="Temur Partsvania, Mini-Soccer Coach at Apple Blossom Academy" loading="lazy" width="400" height="400"></div>
         <h3 class="lang-en">Temur Partsvania</h3><h3 class="lang-uk">Темур Парцванія</h3>
         <div class="role lang-en">Mini-Soccer Coach</div><div class="role lang-uk">Вчитель по міні-футболу</div>
         <p class="lang-en">Former professional footballer &amp; UEFA license holder, bringing playful, confidence-building training to little athletes.</p>
         <p class="lang-uk">Колишній професійний футболіст, власник ліцензії UEFA — ігрові тренування для розвитку впевненості дітей.</p>
+        <span class="team-more"><span class="lang-en">My story</span><span class="lang-uk">Моя історія</span> →</span>
+        <div class="team-story" hidden>
+          <p class="lang-en">I am a former professional footballer and a UEFA license holder. Over the years of my career I played at the professional level and gained deep experience that I now pass on to children through modern, effective training.</p>
+          <p class="lang-en">For the little ones, my sessions are built around play: kids have fun, develop coordination, strengthen their muscles, and improve balance and self-confidence.</p>
+          <p class="lang-en">Every training session helps them celebrate their small victories — and fall in love with sport from an early age.</p>
+          <p class="lang-uk">Я — колишній професійний футболіст та власник ліцензії UEFA. За роки кар'єри я виступав на професійному рівні та отримав великий досвід, який тепер передаю дітям через сучасні та ефективні тренування.</p>
+          <p class="lang-uk">Для маленьких діточок мої заняття відбуваються в ігровій формі: діти весело проводять час, розвивають координацію рухів, зміцнюють м'язи, покращують баланс та впевненість у собі.</p>
+          <p class="lang-uk">Кожне тренування допомагає їм радіти своїм маленьким перемогам та полюбити спорт із раннього віку.</p>
+        </div>
+      </button>
+      </div>
+    </div>
+
+    <!-- Teacher story modal -->
+    <div class="team-modal" id="teamModal" role="dialog" aria-modal="true" aria-label="Teacher story" hidden>
+      <div class="tm-backdrop" data-tm-close></div>
+      <div class="tm-card">
+        <button type="button" class="tm-close" aria-label="Close" data-tm-close>✕</button>
+        <div class="tm-photo"><img id="tmPhoto" src="" alt=""></div>
+        <div class="tm-body">
+          <h3 id="tmName"></h3>
+          <div class="role" id="tmRole"></div>
+          <div class="tm-story" id="tmStory"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -1483,10 +1605,6 @@ html[data-lang="uk"] .lang-en{display:none !important;}
         <h3 style="font-size:1.5rem; color:#1B3A5C; margin-bottom:10px;"><span class="lang-en">Nutrition</span><span class="lang-uk">Харчування</span></h3>
         <p class="lang-en" style="color:var(--ink-soft)">We serve balanced meals: three main meals and two healthy snacks every day. Everything is made from fresh ingredients suited to each child's age, and our menu is designed with the input of a pediatric endocrinologist and nutritionist.</p>
         <p class="lang-uk" style="color:var(--ink-soft)">Ми пропонуємо збалансоване харчування: три основні прийоми їжі та два корисні перекуси щодня. Усі страви готуються зі свіжих продуктів відповідно до віку дітей. Меню розробляється за участю дитячого ендокринолога та дієтолога.</p>
-        <ul class="health-list">
-          <li><span class="hl-ico" style="color:var(--green)"><svg class="ico a-float"><use href="#i-apple"/></svg></span><div><strong class="lang-en">Fresh &amp; age-appropriate</strong><strong class="lang-uk">Свіже та за віком</strong><p class="lang-en">Balanced meals prepared from fresh ingredients.</p><p class="lang-uk">Збалансоване меню зі свіжих продуктів.</p></div></li>
-          <li><span class="hl-ico" style="color:#b8860b"><svg class="ico a-pulse"><use href="#i-warn"/></svg></span><div><strong class="lang-en">Nut-free environment</strong><strong class="lang-uk">Середовище без горіхів</strong><p class="lang-en">Allergies documented at enrollment and carefully tracked.</p><p class="lang-uk">Алергії документуються при реєстрації.</p></div></li>
-        </ul>
       </div>
     </div>
 
@@ -1561,38 +1679,6 @@ html[data-lang="uk"] .lang-en{display:none !important;}
       <div class="gallery-item reveal-scale"><img src="img/site/culture-1.jpg" alt="Teacher in Ukrainian embroidered shirt with students" loading="lazy" width="300" height="160"></div>
       <div class="gallery-item reveal-scale"><img src="img/site/playroom-1.jpg" alt="Children playing together in a bright playroom" loading="lazy" width="300" height="160"></div>
       <div class="gallery-item reveal-scale"><img src="img/site/props-heritage.jpg" alt="Ukrainian-inspired decor: embroidery, wooden blocks, apple blossom map" loading="lazy" width="300" height="160"></div>
-    </div>
-  </div>
-</section>
-
-<!-- ===================== FAQ ===================== -->
-<section class="section faq-section" id="faq">
-  <div class="container">
-    <div class="section-head reveal">
-      <span class="eyebrow" style="background:rgba(255,107,107,.12); color:var(--coral);">FAQ</span>
-      <h2><span class="lang-en">Questions parents ask</span><span class="lang-uk">Питання батьків</span></h2>
-    </div>
-    <div class="faq-list">
-      <div class="faq-item" aria-expanded="false">
-        <button class="faq-q"><span><span class="lang-en">What are your hours?</span><span class="lang-uk">Який графік роботи?</span></span><span class="plus">+</span></button>
-        <div class="faq-a"><p><span class="lang-en">We're open Monday–Friday, 7:00 AM – 6:00 PM.</span><span class="lang-uk">Ми працюємо з понеділка по п'ятницю, з 7:00 до 18:00.</span></p></div>
-      </div>
-      <div class="faq-item" aria-expanded="false">
-        <button class="faq-q"><span><span class="lang-en">What languages are used in the classroom?</span><span class="lang-uk">Якими мовами проходять заняття?</span></span><span class="plus">+</span></button>
-        <div class="faq-a"><p><span class="lang-en">Instruction is fully bilingual in Ukrainian and English, with Russian also spoken by several teachers. We welcome children regardless of which language they speak at home.</span><span class="lang-uk">Навчання проходить двома мовами — українською та англійською. Кілька вчителів також володіють російською. Ми відкриті для всіх дітей.</span></p></div>
-      </div>
-      <div class="faq-item" aria-expanded="false">
-        <button class="faq-q"><span><span class="lang-en">What forms do I need for enrollment?</span><span class="lang-uk">Які документи потрібні для запису?</span></span><span class="plus">+</span></button>
-        <div class="faq-a"><p><span class="lang-en">Florida requires several mandatory forms. The full checklist is in our Enrollment section below, and we send digital copies after you pre-register.</span><span class="lang-uk">Штат Флорида вимагає кілька обов'язкових форм — повний список у розділі "Записатись" нижче.</span></p></div>
-      </div>
-      <div class="faq-item" aria-expanded="false">
-        <button class="faq-q"><span><span class="lang-en">How do you handle allergies?</span><span class="lang-uk">Як ви враховуєте алергії?</span></span><span class="plus">+</span></button>
-        <div class="faq-a"><p><span class="lang-en">We maintain a nut-free environment and document all allergies and dietary restrictions at enrollment, with menus reviewed by our founder, a pediatric nutritionist.</span><span class="lang-uk">Ми підтримуємо середовище без горіхів і документуємо всі алергії при реєстрації; меню перевіряє наша засновниця-дієтолог.</span></p></div>
-      </div>
-      <div class="faq-item" aria-expanded="false">
-        <button class="faq-q"><span><span class="lang-en">What age range do you accept?</span><span class="lang-uk">Дітей якого віку ви приймаєте?</span></span><span class="plus">+</span></button>
-        <div class="faq-a"><p><span class="lang-en">We welcome children from 2 to 12 years old, across four tailored programs: Toddlers, Preschool, Pre-K, and Aftercare.</span><span class="lang-uk">Ми приймаємо дітей від 2 до 12 років у чотирьох групах: малята, дошкільнята, підготовка до школи та продовжений день для школярів.</span></p></div>
-      </div>
     </div>
   </div>
 </section>
@@ -1685,57 +1771,7 @@ html[data-lang="uk"] .lang-en{display:none !important;}
           </div>
         </form>
 
-        <form class="form-card contact-card reveal" id="contactForm" novalidate>
-          <h3><span class="lang-en">Contact Us</span><span class="lang-uk">Форма зв'язку</span></h3>
-          <p><span class="lang-en">General questions? Send us a message.</span><span class="lang-uk">Маєте запитання? Напишіть нам.</span></p>
 
-          <div class="row2">
-            <div class="field">
-              <input type="text" id="cName" name="name" placeholder=" " required autocomplete="name">
-              <label for="cName"><span class="lang-en">Name</span><span class="lang-uk">Ім'я</span></label>
-              <div class="err" data-err-for="cName"></div>
-            </div>
-            <div class="field">
-              <input type="email" id="cEmail" name="email" placeholder=" " required autocomplete="email">
-              <label for="cEmail">Email</label>
-              <div class="err" data-err-for="cEmail"></div>
-            </div>
-          </div>
-
-          <div class="row2">
-            <div class="field">
-              <input type="tel" id="cPhone" name="phone" placeholder=" " autocomplete="tel">
-              <label for="cPhone"><span class="lang-en">Phone (optional)</span><span class="lang-uk">Телефон (необов'язково)</span></label>
-            </div>
-            <div class="field has-value">
-              <select id="cSubject" name="subject" required>
-                <option value="" disabled selected hidden></option>
-                <option value="enrollment">Enrollment / Записатись</option>
-                <option value="programs">Programs / Програми</option>
-                <option value="tour">Schedule a Tour / Екскурсія</option>
-                <option value="other">Other / Інше</option>
-              </select>
-              <label for="cSubject"><span class="lang-en">Subject</span><span class="lang-uk">Тема</span></label>
-            </div>
-          </div>
-
-          <div class="field">
-            <textarea id="cMessage" name="message" placeholder=" " required></textarea>
-            <label for="cMessage"><span class="lang-en">Message</span><span class="lang-uk">Повідомлення</span></label>
-            <div class="err" data-err-for="cMessage"></div>
-          </div>
-
-          <button type="submit" class="submit-btn" style="background:var(--blue); box-shadow:0 12px 26px rgba(77,150,255,.32);">
-            <span class="lang-en">Send Message</span><span class="lang-uk">Надіслати</span> <span aria-hidden="true">✉️</span>
-          </button>
-
-          <div class="form-success" id="contactSuccess">
-            <div class="success-badge" style="background:var(--blue);">✓</div>
-            <h4 class="lang-en">Message sent!</h4><h4 class="lang-uk">Повідомлення надіслано!</h4>
-            <p class="lang-en">Our administrator has been notified and will get back to you soon.</p>
-            <p class="lang-uk">Наш адміністратор отримав сповіщення і незабаром зв'яжеться з вами.</p>
-          </div>
-        </form>
       </div>
 
       <div class="side-info reveal">
@@ -1743,7 +1779,7 @@ html[data-lang="uk"] .lang-en{display:none !important;}
           <span class="ic-ico" style="background:rgba(255,107,107,.12); color:var(--coral);"><svg class="ico a-float"><use href="#i-pin"/></svg></span>
           <div>
             <h4><span class="lang-en">Address</span><span class="lang-uk">Адреса</span></h4>
-            <p><span class="lang-en">Jacksonville, FL <em>(exact address announced soon)</em></span><span class="lang-uk">Джексонвіл, Флорида <em>(точна адреса — незабаром)</em></span></p>
+            <p><span class="lang-en">12246 San Jose Blvd, Jacksonville, FL 32223</span><span class="lang-uk">12246 San Jose Blvd, Джексонвіл, Флорида 32223</span></p>
           </div>
         </div>
         <div class="info-card">
@@ -1757,20 +1793,12 @@ html[data-lang="uk"] .lang-en{display:none !important;}
           <span class="ic-ico" style="background:rgba(107,203,119,.18); color:#2f7a3c;"><svg class="ico a-float" style="animation-delay:.5s"><use href="#i-mail"/></svg></span>
           <div>
             <h4>Email</h4>
-            <p>hello@appleblossomacademy.com</p>
+            <p><a href="mailto:childcare.aba@gmail.com">childcare.aba@gmail.com</a></p>
           </div>
         </div>
-        <div class="info-card">
-          <span class="ic-ico" style="background:rgba(77,150,255,.16); color:#1a5fd6;"><svg class="ico a-pulse"><use href="#i-clock"/></svg></span>
-          <div>
-            <h4><span class="lang-en">Hours</span><span class="lang-uk">Години роботи</span></h4>
-            <p><span class="lang-en">Mon–Fri · 7:00 AM – 6:00 PM</span><span class="lang-uk">Пн–Пт · 7:00 – 18:00</span></p>
-          </div>
-        </div>
-
         <div class="map-embed">
           <iframe
-            src="https://www.google.com/maps?q=Jacksonville,FL&output=embed"
+            src="https://www.google.com/maps?q=12246+San+Jose+Blvd,+Jacksonville,+FL+32223&output=embed"
             title="Map showing Jacksonville, Florida"
             loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"></iframe>
@@ -1799,8 +1827,8 @@ html[data-lang="uk"] .lang-en{display:none !important;}
           <img src="img/site/logo.png" alt="Apple Blossom Academy logo" width="46" height="46">
           <strong>Apple Blossom Academy</strong>
         </div>
-        <p class="lang-en" style="max-width:320px; font-size:.92rem;">Cultivating Language &amp; Culture: a bilingual Ukrainian-English preschool and daycare in Jacksonville, Florida.</p>
-        <p class="lang-uk" style="max-width:320px; font-size:.92rem;">Плекаємо мову та культуру — двомовний українсько-англійський садочок у Джексонвілі, Флорида.</p>
+        <p class="lang-en" style="max-width:320px; font-size:.92rem;">Cultivating Language &amp; Culture.</p>
+        <p class="lang-uk" style="max-width:320px; font-size:.92rem;">Плекаємо мову та культуру.</p>
       </div>
       <div class="footer-col">
         <h5><span class="lang-en">Explore</span><span class="lang-uk">Розділи</span></h5>
@@ -1815,10 +1843,9 @@ html[data-lang="uk"] .lang-en{display:none !important;}
       <div class="footer-col">
         <h5><span class="lang-en">Contact</span><span class="lang-uk">Контакти</span></h5>
         <ul>
-          <li>Jacksonville, FL</li>
-          <li>hello@appleblossomacademy.com</li>
-          <li>+1 (XXX) XXX-XXXX</li>
-          <li><span class="lang-en">Mon–Fri · 7 AM–6 PM</span><span class="lang-uk">Пн–Пт · 7:00–18:00</span></li>
+          <li>12246 San Jose Blvd,<br>Jacksonville, FL 32223</li>
+          <li><a href="mailto:childcare.aba@gmail.com">childcare.aba@gmail.com</a></li>
+          <li><a href="tel:+12407061704">+1 (240) 706-1704</a></li>
         </ul>
       </div>
     </div>
@@ -1938,11 +1965,6 @@ html[data-lang="uk"] .lang-en{display:none !important;}
     langBtns.forEach(function(b){ b.setAttribute('aria-pressed', b.dataset.langBtn === lang ? 'true':'false'); });
     try{ localStorage.setItem('aba_lang', lang); }catch(e){}
     document.documentElement.lang = lang === 'uk' ? 'uk' : 'en';
-    // Recompute any open collapsible panels (content height differs per language)
-    requestAnimationFrame(function(){
-      document.querySelectorAll('.program-card.open .program-detail').forEach(function(d){ d.style.maxHeight = d.scrollHeight + 'px'; });
-      document.querySelectorAll('.faq-item[aria-expanded="true"] .faq-a').forEach(function(a){ a.style.maxHeight = a.scrollHeight + 'px'; });
-    });
   }
   langBtns.forEach(function(btn){
     btn.addEventListener('click', function(){ setLang(btn.dataset.langBtn); });
@@ -2023,45 +2045,6 @@ html[data-lang="uk"] .lang-en{display:none !important;}
     });
   });
 
-  /* ---------- FAQ accordion ---------- */
-  document.querySelectorAll('.faq-item').forEach(function(item){
-    var q = item.querySelector('.faq-q');
-    var a = item.querySelector('.faq-a');
-    q.addEventListener('click', function(){
-      var isOpen = item.getAttribute('aria-expanded') === 'true';
-      document.querySelectorAll('.faq-item').forEach(function(other){
-        other.setAttribute('aria-expanded','false');
-        other.querySelector('.faq-a').style.maxHeight = null;
-      });
-      if(!isOpen){
-        item.setAttribute('aria-expanded','true');
-        a.style.maxHeight = a.scrollHeight + 'px';
-      }
-    });
-  });
-
-  /* ---------- Programs accordion ---------- */
-  document.querySelectorAll('.program-card').forEach(function(card){
-    var head = card.querySelector('.program-head');
-    var detail = card.querySelector('.program-detail');
-    if(!head || !detail) return;
-    head.addEventListener('click', function(){
-      var isOpen = card.classList.contains('open');
-      document.querySelectorAll('.program-card').forEach(function(other){
-        other.classList.remove('open');
-        var d = other.querySelector('.program-detail');
-        var h = other.querySelector('.program-head');
-        if(d) d.style.maxHeight = null;
-        if(h) h.setAttribute('aria-expanded','false');
-      });
-      if(!isOpen){
-        card.classList.add('open');
-        head.setAttribute('aria-expanded','true');
-        detail.style.maxHeight = detail.scrollHeight + 'px';
-      }
-    });
-  });
-
   /* ---------- Form validation + fake-submit success ---------- */
   function showError(input, msg){
     var err = document.querySelector('[data-err-for="'+input.id+'"]');
@@ -2131,7 +2114,96 @@ html[data-lang="uk"] .lang-en{display:none !important;}
     });
   }
   wireForm('preregForm','preregSuccess');
-  wireForm('contactForm','contactSuccess');
+
+  /* ---------- Teacher story modal ---------- */
+  var teamModal = document.getElementById('teamModal');
+  if(teamModal){
+    var tmPhoto = document.getElementById('tmPhoto');
+    var tmName = document.getElementById('tmName');
+    var tmRole = document.getElementById('tmRole');
+    var tmStory = document.getElementById('tmStory');
+    var lastFocus = null;
+    function openTeam(card){
+      var img = card.querySelector('.team-photo img');
+      tmPhoto.src = img.src; tmPhoto.alt = img.alt;
+      tmName.innerHTML = [].map.call(card.querySelectorAll('h3'), function(h){ return h.innerHTML; }).join('');
+      tmRole.innerHTML = [].map.call(card.querySelectorAll(':scope > .role'), function(r){ return '<span class="'+r.className.replace('role','').trim()+'">'+r.innerHTML+'</span>'; }).join('');
+      tmStory.innerHTML = card.querySelector('.team-story').innerHTML;
+      teamModal.hidden = false;
+      document.body.style.overflow = 'hidden';
+      lastFocus = card;
+      teamModal.querySelector('.tm-close').focus();
+    }
+    function closeTeam(){
+      if(reduceMotion){
+        teamModal.hidden = true;
+        document.body.style.overflow = '';
+        if(lastFocus) lastFocus.focus();
+        return;
+      }
+      teamModal.classList.add('closing');
+      setTimeout(function(){
+        teamModal.classList.remove('closing');
+        teamModal.hidden = true;
+        document.body.style.overflow = '';
+        if(lastFocus) lastFocus.focus();
+      }, 300);
+    }
+    document.querySelectorAll('[data-team-open]').forEach(function(card){
+      card.addEventListener('click', function(){ openTeam(card); });
+    });
+    teamModal.querySelectorAll('[data-tm-close]').forEach(function(el){
+      el.addEventListener('click', closeTeam);
+    });
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape' && !teamModal.hidden) closeTeam();
+    });
+  }
+
+  /* ---------- Teachers carousel ---------- */
+  var teamTrack = document.getElementById('teamTrack');
+  if(teamTrack){
+    var teamPrev = document.getElementById('teamPrev');
+    var teamNext = document.getElementById('teamNext');
+    function teamStep(){
+      var card = teamTrack.querySelector('.team-card');
+      return card ? card.getBoundingClientRect().width + 24 : 320;
+    }
+    function updateTeamNav(){
+      var maxScroll = teamTrack.scrollWidth - teamTrack.clientWidth - 2;
+      teamPrev.disabled = teamTrack.scrollLeft <= 2;
+      teamNext.disabled = teamTrack.scrollLeft >= maxScroll;
+      // hide both arrows entirely if nothing to scroll
+      var noScroll = teamTrack.scrollWidth <= teamTrack.clientWidth + 4;
+      teamPrev.style.display = noScroll ? 'none' : '';
+      teamNext.style.display = noScroll ? 'none' : '';
+    }
+    teamPrev.addEventListener('click', function(){ teamTrack.scrollBy({left:-teamStep(), behavior:'smooth'}); });
+    teamNext.addEventListener('click', function(){ teamTrack.scrollBy({left:teamStep(), behavior:'smooth'}); });
+    teamTrack.addEventListener('scroll', updateTeamNav, {passive:true});
+    window.addEventListener('resize', updateTeamNav);
+    updateTeamNav();
+  }
+
+  /* ---------- Programs accordion ---------- */
+  var programCards = document.querySelectorAll('.program-card');
+  programCards.forEach(function(card){
+    var head = card.querySelector('.program-head');
+    var detail = card.querySelector('.program-detail');
+    if(!head || !detail) return;
+    head.addEventListener('click', function(){
+      var isOpen = card.classList.contains('open');
+      // close others (one open at a time keeps the grid tidy)
+      programCards.forEach(function(other){
+        if(other !== card && other.classList.contains('open')){
+          other.classList.remove('open');
+          other.querySelector('.program-head').setAttribute('aria-expanded','false');
+        }
+      });
+      card.classList.toggle('open', !isOpen);
+      head.setAttribute('aria-expanded', !isOpen ? 'true' : 'false');
+    });
+  });
 
   /* ---------- Mandatory forms collapse ---------- */
   var formsToggle = document.getElementById('formsToggle');
