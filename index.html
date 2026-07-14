@@ -2123,36 +2123,29 @@ html[data-lang="uk"] .lang-en{display:none !important;}
       btn.disabled = true;
       btn.innerHTML = (root.getAttribute('data-lang')==='uk' ? 'Надсилаємо…' : 'Sending…');
       fetch('https://script.google.com/macros/s/AKfycbxyoA9Cx2kEqeicSgXr2BKKHszLYzayrPwwLj58_58Zuvqwrv4qerYtbwujuLrPz8qb/exec', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(Object.fromEntries(new FormData(form)))
+          method: 'POST',
+          body: new URLSearchParams(new FormData(form)),
+          redirect: 'follow'
       })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Server error');
-        }
+      .then(r => r.text())
+      .then(data => {
       
-        btn.disabled = false;
-        btn.innerHTML = originalHTML;
+          btn.disabled = false;
+          btn.innerHTML = originalHTML;
       
-        form.classList.add('submitted');
-        success.classList.add('show');
-        success.setAttribute('tabindex','-1');
-        success.focus();
+          form.classList.add('submitted');
+          success.classList.add('show');
+          success.setAttribute('tabindex','-1');
+          success.focus();
+      
       })
-      .catch(error => {
-        console.error(error);
+      .catch(err=>{
+          console.error(err);
       
-        btn.disabled = false;
-        btn.innerHTML = originalHTML;
+          btn.disabled = false;
+          btn.innerHTML = originalHTML;
       
-        alert(
-          root.getAttribute('data-lang') === 'uk'
-            ? 'Помилка надсилання форми.'
-            : 'Failed to send the form.'
-        );
+          alert("Помилка надсилання форми");
       });
     });
   }
