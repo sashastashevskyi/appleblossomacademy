@@ -429,13 +429,13 @@ header.site-header:not(.scrolled) .brand-text{opacity:0;}
 .who-section{background:linear-gradient(180deg,#FFFBF3,#FFF6EC);}
 .who-grid{
   display:grid; align-items:center; column-gap:clamp(30px,5vw,70px); row-gap:0;
-  grid-template-columns:minmax(260px,380px) 1fr;
+  grid-template-columns:minmax(200px,266px) 1fr;
   grid-template-areas:"photo head" "photo text";
 }
 .who-head{grid-area:head; align-self:end;}
 .who-head h2{font-size:clamp(1.9rem,4vw,2.7rem); color:#1B3A5C; margin-bottom:20px;}
 .who-text{grid-area:text; align-self:start;}
-.who-photo-wrap{grid-area:photo; position:relative; max-width:380px;}
+.who-photo-wrap{grid-area:photo; position:relative; max-width:266px;}
 .who-photo{
   border-radius:var(--radius-lg); overflow:hidden; box-shadow:var(--shadow-lg);
   border:8px solid var(--amber); aspect-ratio:4/5; object-fit:cover;
@@ -498,7 +498,7 @@ header.site-header:not(.scrolled) .brand-text{opacity:0;}
 .program-media{
   width:88px; height:88px; border-radius:18px; overflow:hidden; flex:none; position:relative;
 }
-.program-media img{width:100%; height:100%; object-fit:cover; transition:transform .6s var(--ease);}
+.program-media img{width:100%; height:100%; object-fit:cover; object-position:center 22%; transition:transform .6s var(--ease);}
 .program-card:hover .program-media img{transform:scale(1.08);}
 .program-headings{flex:1; min-width:0;}
 .program-tag{
@@ -512,16 +512,38 @@ header.site-header:not(.scrolled) .brand-text{opacity:0;}
   background:var(--pcbg, rgba(0,0,0,.05)); color:var(--pc, var(--ink)); transition:transform .4s var(--ease);
 }
 .program-card.open .program-plus{transform:rotate(180deg);}
-.program-detail{display:grid; grid-template-rows:0fr; transition:grid-template-rows .5s var(--ease-soft);}
-.program-card.open .program-detail{grid-template-rows:1fr;}
-.program-detail > .program-detail-inner{min-height:0; overflow:hidden;}
-.program-detail-inner{padding:0 22px; color:var(--ink-soft); font-size:.94rem; transition:padding .5s var(--ease-soft);}
-.program-card.open .program-detail-inner{padding:2px 22px 24px;}
+/* JS-driven height accordion (reliable across engines; grid-rows 1fr proved flaky here) */
+.program-detail{height:0; overflow:hidden; transition:height .45s var(--ease-soft);}
+.program-detail-inner{padding:4px 22px 24px; color:var(--ink-soft); font-size:.94rem;}
 .program-detail-inner p{margin-bottom:12px;}
 .program-detail-inner ul{display:grid; gap:8px; margin-top:6px;}
 .program-detail-inner li{display:flex; gap:10px; align-items:flex-start;}
 .program-detail-inner li::before{content:''; width:8px; height:8px; border-radius:50%; background:var(--pc,var(--coral)); margin-top:7px; flex:none;}
 .program-detail-inner .detail-hd{font-family:var(--font-display); font-weight:600; color:#1B3A5C; font-size:1.02rem; margin:4px 0 10px;}
+
+/* Mobile programs: full-width image banner on top, text full-width below — no cramped
+   side column, so lines read naturally instead of one word at a time. */
+@media (max-width:720px){
+  .program-card{border-radius:22px;}
+  .program-head{flex-direction:column; align-items:stretch; gap:0; padding:0; position:relative;}
+  .program-media{
+    width:100%; height:clamp(150px,42vw,200px); border-radius:0; position:relative;
+  }
+  .program-media::after{
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(27,58,92,0) 55%, rgba(27,58,92,.28));
+  }
+  .program-headings{padding:16px 18px 18px;}
+  .program-tag{margin-bottom:10px;}
+  .program-card h3{font-size:1.3rem; margin-bottom:6px;}
+  .program-short{font-size:.95rem; line-height:1.55;}
+  .program-plus{
+    position:absolute; top:12px; right:12px; z-index:2; width:40px; height:40px;
+    background:rgba(255,255,255,.94); color:var(--pc,var(--ink));
+    box-shadow:0 6px 16px rgba(0,0,0,.18); backdrop-filter:blur(4px);
+  }
+  .program-detail-inner{padding:4px 18px 22px;}
+}
 
 /* ===== Age groups ===== */
 .ages-section{background:linear-gradient(180deg,#FFF1F0,#ECF4FF);}
@@ -605,7 +627,8 @@ header.site-header:not(.scrolled) .brand-text{opacity:0;}
   from{opacity:0; transform:translateY(30px) scale(.94);}
   to{opacity:1; transform:translateY(0) scale(1);}
 }
-.tm-photo{position:relative; overflow:hidden;}
+/* static so the close button (its child) anchors to .tm-card (top-right) on desktop */
+.tm-photo{overflow:hidden;}
 .tm-photo img{width:100%; height:100%; object-fit:cover; object-position:center top; min-height:100%; animation:tmPhotoIn .7s var(--ease) both;}
 @keyframes tmPhotoIn{from{transform:scale(1.12);} to{transform:scale(1);}}
 .tm-body{padding:34px 34px 30px; overflow-y:auto; max-height:86vh;}
@@ -635,10 +658,12 @@ header.site-header:not(.scrolled) .brand-text{opacity:0;}
 }
 .tm-close:hover{background:var(--coral); color:#fff; transform:rotate(90deg);}
 @media (max-width:680px){
-  .tm-card{grid-template-columns:1fr; max-height:88vh;}
+  /* Whole card scrolls as one (photo + text) so the full story is always reachable */
+  .tm-card{grid-template-columns:1fr; max-height:90vh; overflow-y:auto; -webkit-overflow-scrolling:touch;}
   /* Portrait-friendly crop so both head and torso show, head never clipped at the top */
+  .tm-photo{position:relative;} /* anchor close button to the photo so it scrolls away with it */
   .tm-photo img{aspect-ratio:4/5; min-height:0; object-position:center 22%;}
-  .tm-body{padding:24px 22px;}
+  .tm-body{padding:24px 22px; max-height:none; overflow:visible;}
 }
 .team-photo{
   width:150px; height:150px; border-radius:50%; overflow:hidden; margin:0 auto 16px;
@@ -699,7 +724,9 @@ header.site-header:not(.scrolled) .brand-text{opacity:0;}
 .gallery-grid{
   display:grid; grid-template-columns:repeat(4,1fr); grid-auto-rows:160px; gap:16px;
 }
-.gallery-grid img{width:100%; height:100%; object-fit:cover; border-radius:18px; transition:transform .5s var(--ease), filter .5s var(--ease);}
+.gallery-grid img{width:100%; height:100%; object-fit:cover; object-position:center 26%; border-radius:18px; transition:transform .5s var(--ease), filter .5s var(--ease);}
+/* the props/decor shelf reads better centered */
+.gallery-item img[src*="props-heritage"]{object-position:center;}
 .gallery-item{border-radius:18px; overflow:hidden; box-shadow:var(--shadow-sm); cursor:pointer;}
 .gallery-item:hover img{transform:scale(1.08);}
 .gallery-item.big{grid-column:span 2; grid-row:span 2;}
@@ -812,16 +839,29 @@ form.submitted > h3, form.submitted > p{display:none;}
 }
 
 /* ===== Collapsible forms ===== */
-.forms-collapse{max-height:0; overflow:hidden; transition:max-height .55s var(--ease-soft);}
-.forms-collapse.open{max-height:900px;}
-.forms-toggle{
-  display:inline-flex; align-items:center; gap:10px; background:rgba(255,255,255,.6); border-radius:999px;
-  padding:12px 22px; font-weight:800; font-size:.9rem; color:#4a3600; transition:background .3s var(--ease);
+/* Single-form download card inside the amber mandatory box */
+.form-download{
+  display:flex; align-items:center; gap:16px; max-width:560px; margin-top:16px;
+  background:rgba(255,255,255,.72); border-radius:18px; padding:16px 18px;
+  box-shadow:var(--shadow-sm); transition:transform .3s var(--ease), box-shadow .3s var(--ease), background .3s var(--ease);
 }
-.forms-toggle:hover{background:rgba(255,255,255,.85);}
-.forms-toggle .ico{transition:transform .4s var(--ease);}
-.forms-toggle[aria-expanded="true"] .ico{transform:rotate(180deg);}
-.forms-collapse .forms-grid{padding-top:20px;}
+.form-download:hover{transform:translateY(-3px); box-shadow:var(--shadow-md); background:rgba(255,255,255,.9);}
+.form-download .fd-ico{
+  width:52px; height:52px; border-radius:14px; flex:none; color:#4a3600;
+  background:rgba(255,217,61,.35); display:flex; align-items:center; justify-content:center;
+}
+.form-download .fd-text{flex:1; min-width:0; display:flex; flex-direction:column; gap:2px;}
+.form-download .fd-text strong{color:#3a2c00; font-size:1rem; line-height:1.3;}
+.form-download .fd-text small{color:#7a6420; font-weight:700; font-size:.76rem;}
+.form-download .fd-btn{
+  flex:none; display:inline-flex; align-items:center; gap:7px;
+  background:#4a3600; color:var(--amber); border-radius:999px; padding:10px 18px;
+  font-weight:800; font-size:.84rem;
+}
+@media (max-width:560px){
+  .form-download{flex-wrap:wrap;}
+  .form-download .fd-btn{width:100%; justify-content:center;}
+}
 
 /* ===== Stats band ===== */
 .stats-band{
@@ -842,12 +882,12 @@ form.submitted > h3, form.submitted > p{display:none;}
 
 /* ===== Sticky mobile CTA ===== */
 .sticky-cta{
-  position:fixed; left:0; right:0; bottom:0; z-index:150; display:none;
-  padding:10px 14px calc(10px + env(safe-area-inset-bottom));
+  position:fixed; left:12px; right:12px; bottom:calc(20px + env(safe-area-inset-bottom)); z-index:150; display:none;
+  padding:10px 12px; border-radius:20px;
   background:var(--glass-strong); backdrop-filter:blur(14px) saturate(1.4);
   -webkit-backdrop-filter:blur(14px) saturate(1.4);
-  box-shadow:0 -6px 24px rgba(30,26,24,.12);
-  gap:10px; transform:translateY(110%); transition:transform .4s var(--ease);
+  box-shadow:0 10px 30px rgba(30,26,24,.16);
+  gap:10px; transform:translateY(160%); transition:transform .4s var(--ease);
 }
 .sticky-cta.show{transform:translateY(0);}
 .sticky-cta .cta-btn{flex:1; justify-content:center; padding:13px 10px; font-size:.9rem;}
@@ -905,10 +945,16 @@ footer.site-footer{background:#1B3A5C; color:rgba(255,255,255,.82); padding:60px
   .row2{grid-template-columns:1fr;}
 }
 @media (max-width:860px){
-  .brand{font-size:.95rem; gap:8px;}
+  .brand{font-size:.95rem; gap:8px; min-width:0;}
   .brand img{width:36px; height:36px;}
   html .brand-text small.lang-en, html[data-lang="uk"] .brand-text small.lang-uk{display:none !important;}
-  .header-actions{gap:8px;}
+  /* Push controls to the right and stop the (invisible-until-scrolled) brand name
+     from reserving width and shoving the burger off-screen. */
+  .header-actions{gap:8px; margin-left:auto; flex:none;}
+  /* On phones the logo mark alone carries the brand — hiding the name guarantees the
+     lang switch + burger always fit with room to spare. */
+  .brand-text{display:none !important;}
+  .menu-toggle{margin-right:2px;}
   .lang-switch button{padding:5px 10px; font-size:.7rem;}
   .hero{padding-bottom:110px;}
   .hero-badge-row{margin-top:30px;}
@@ -1007,6 +1053,8 @@ html[data-lang="uk"] .lang-en{display:none !important;}
   <symbol id="i-in" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="3"/><path d="M8 10.5V17M8 7.3h.01M12.5 17v-3.8a2.2 2.2 0 0 1 4.4 0V17M12.5 13.2v-2.7"/></symbol>
   <symbol id="i-warn" viewBox="0 0 24 24"><path d="M12 4.5L2.8 20h18.4z"/><path d="M12 10.5v4M12 17.3h.01"/></symbol>
   <symbol id="i-chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/><path d="M9 12h6M9 16h6"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 4v11M7 10l5 5 5-5"/><path d="M5 20h14"/></symbol>
 </svg>
 
 <a href="#main" class="skip-link">Skip to content / Перейти до вмісту</a>
@@ -1130,7 +1178,7 @@ html[data-lang="uk"] .lang-en{display:none !important;}
       <span class="lang-uk"><span class="h1-lead">Дитячий садочок</span> <span class="accent">Apple Blossom Academy</span> <span class="h1-tail">у Джексонвілі</span></span>
     </h1>
     <div class="hero-actions">
-      <a href="#enroll" class="cta-btn"><span class="lang-en">Book a Free Tour</span><span class="lang-uk">Записатись на екскурсію</span> <span aria-hidden="true">→</span></a>
+      <a href="#enroll" class="cta-btn"><span class="lang-en">Register</span><span class="lang-uk">Зареєструватись</span> <span aria-hidden="true">→</span></a>
     </div>
   </div>
 
@@ -1210,8 +1258,8 @@ html[data-lang="uk"] .lang-en{display:none !important;}
       <div class="why-card coral reveal">
         <div class="why-icon" style="color:var(--coral)"><svg class="ico lg a-float"><use href="#i-home"/></svg></div>
         <h3><span class="lang-en">Nurturing Environment</span><span class="lang-uk">Турботливе середовище</span></h3>
-        <p class="lang-en">A safe, calm space where teachers know every child by name and children learn in the languages they speak at home.</p>
-        <p class="lang-uk">Безпечний та стимулюючий простір, де кожну дитину бачать, чують, поважають, а вона зростає через багатомовне навчання.</p>
+        <p class="lang-en">A safe, stimulating space where every child is seen, heard, and respected — growing through multilingual learning. With us, your child discovers all of their natural talents with ease.</p>
+        <p class="lang-uk">Безпечний та стимулюючий простір, де кожну дитину бачать, чують, поважають, а вона зростає через багатомовне навчання. Разом із нами ваша дитина легко відкриватиме всі свої природні таланти.</p>
       </div>
       <div class="why-card amber reveal">
         <div class="why-icon" style="color:#b8860b"><svg class="ico lg a-spin"><use href="#i-globe"/></svg></div>
@@ -1248,8 +1296,8 @@ html[data-lang="uk"] .lang-en{display:none !important;}
         <span class="stat-label"><span class="lang-en">languages spoken by our team</span><span class="lang-uk">мови, якими володіє команда</span></span>
       </div>
       <div class="stat reveal">
-        <span class="stat-num" data-count="4">0</span>
-        <span class="stat-label"><span class="lang-en">age groups, ages 2–12</span><span class="lang-uk">вікові групи, від 2 до 12</span></span>
+        <span class="stat-num" data-count="3">0</span>
+        <span class="stat-label"><span class="lang-en">caring age groups</span><span class="lang-uk">турботливі вікові групи</span></span>
       </div>
       <div class="stat reveal">
         <span class="stat-num" data-count="4">0</span>
@@ -1278,13 +1326,13 @@ html[data-lang="uk"] .lang-en{display:none !important;}
         </div>
       </div>
       <div class="who-text reveal">
-        <p class="lang-en">I am a pediatric endocrinologist and nutritionist. I moved to the United States from Ukraine in 2020, after 25 years of treating children with endocrine conditions and supporting their families. That work taught me what children actually need at every age, and what helps them grow up healthy and happy.</p>
-        <p class="lang-en">When the war began in Ukraine, many young families with small children arrived in the U.S. Watching them settle here, I saw how much they needed a good place for their kids: somewhere to learn and make friends, and somewhere to get real emotional support while adjusting to a new country.</p>
-        <p class="lang-en">So we built Apple Blossom: a warm, safe place where every child is understood and hears their home language every day. Lessons, books, art, and music happen in two languages, and in a third when a family needs it.</p>
+        <p class="lang-en">I am a pediatric endocrinologist and nutritionist. I earned my medical degree and built my professional experience in Ukraine, and in 2020 I moved to the United States. For more than 25 years I have devoted my life to children with endocrine conditions and to supporting their families. That work taught me what children of every age truly need — what brings them joy, supports their harmonious development, and helps them grow up healthy and happy.</p>
+        <p class="lang-en">When the war began in Ukraine, many Ukrainian families with young children moved to the U.S. Over this time, many young families have built a new home here and welcomed new babies. That was when I saw a real need for a quality space for children of all ages — a place where they can not only learn and grow, but also receive the emotional support, attention, and care they need while adjusting to a new life.</p>
+        <p class="lang-en">So I chose not to spend time re-certifying my medical degree in America, but instead to start over — completing all the training and certification needed to lead the finest, most modern children's academy in Florida.</p>
 
-        <p class="lang-uk">Я — дитячий лікар-ендокринолог та дієтолог. У 2020 році переїхала до США з України. Понад 25 років свого життя я присвятила роботі з дітьми, які мають ендокринні захворювання, та підтримці їхніх сімей. За цей час я добре зрозуміла потреби дітей різного віку — що приносить їм радість і допомагає зростати здоровими й щасливими.</p>
-        <p class="lang-uk">Після початку війни в Україні багато українських родин із маленькими дітьми переїхали до США. Саме тоді я побачила велику потребу у створенні якісного дитячого простору — місця, де діти можуть навчатися, розвиватися й отримувати психологічну підтримку в період адаптації до нового життя.</p>
-        <p class="lang-uk">Ми прагнемо створити тепле, безпечне та дружнє середовище, де кожну дитину розуміють, поважають її індивідуальність і спілкуються з нею рідною мовою. Навчання, книги, творчі заняття та музика будуть доступні двома, а за потреби — трьома мовами.</p>
+        <p class="lang-uk">Я — дитячий лікар-ендокринолог та дієтолог, медичну освіту та професійний досвід отримала в Україні. У 2020 році переїхала до США. Понад 25 років свого життя я присвятила роботі з дітьми, які мають ендокринні захворювання, та підтримці їхніх сімей. За цей час я добре зрозуміла потреби дітей різного віку, знаю, що приносить їм радість, що сприяє їхньому гармонійному розвитку та допомагає зростати здоровими й щасливими.</p>
+        <p class="lang-uk">Після початку війни в Україні багато українських родин із маленькими дітьми переїхали до США. За цей час чимало молодих сімей створили тут новий дім і народили дітей. Саме тоді я побачила велику потребу у створенні якісного дитячого простору для дітей різного віку — місця, де вони можуть не лише навчатися та розвиватися, а й отримувати необхідну психологічну підтримку, увагу та турботу в період адаптації до нового життя.</p>
+        <p class="lang-uk">Тому я вирішила не витрачати час на оновлення медичної освіти в Америці, а з нуля почати навчання та отримати всю необхідну сертифікацію для очолювання найякіснішого та сучасного дитячого закладу у Флориді.</p>
 
         <div class="who-signature">
           <div>
@@ -1307,7 +1355,7 @@ html[data-lang="uk"] .lang-en{display:none !important;}
         <span class="lang-en">Our Teachers</span><span class="lang-uk">Наша команда</span>
       </span>
       <h2><span class="lang-en">The hearts behind Apple Blossom</span><span class="lang-uk">Серця Apple Blossom</span></h2>
-      <p><span class="lang-en">Caring, experienced educators who speak Ukrainian, English, and Russian.</span><span class="lang-uk">Турботливі, досвідчені педагоги, які володіють українською, англійською та російською мовами.</span></p>
+      <p><span class="lang-en">Our academy is staffed by caring, experienced educators who speak Ukrainian, English, and Russian. Every teacher holds a relevant degree and has experience working with children in the U.S. We create an atmosphere of love, safety, and mutual respect, where every child feels confident, comfortable, and happy.</span><span class="lang-uk">У нашому садочку працюють турботливі та досвідчені педагоги, які володіють українською, англійською та російською мовами. Усі вихователі мають профільну освіту та досвід роботи з дітьми в США. Ми створюємо атмосферу любові, безпеки та взаємоповаги, де кожна дитина почувається впевнено, комфортно та щасливо.</span></p>
     </div>
 
     <div class="team-carousel reveal">
@@ -1350,8 +1398,8 @@ html[data-lang="uk"] .lang-en{display:none !important;}
         <div class="team-photo"><img src="img/site/teacher-temur.jpg" alt="Temur Partsvania, Mini-Soccer Coach at Apple Blossom Academy" loading="lazy" width="400" height="400"></div>
         <h3 class="lang-en">Temur Partsvania</h3><h3 class="lang-uk">Темур Парцванія</h3>
         <div class="role lang-en">Mini-Soccer Coach</div><div class="role lang-uk">Вчитель по міні-футболу</div>
-        <p class="lang-en">Former professional footballer &amp; UEFA license holder, bringing playful, confidence-building training to little athletes.</p>
-        <p class="lang-uk">Колишній професійний футболіст, власник ліцензії UEFA — ігрові тренування для розвитку впевненості дітей.</p>
+        <p class="lang-en">A former professional footballer and UEFA license holder. Every session helps children celebrate their small wins and fall in love with sport.</p>
+        <p class="lang-uk">Колишній професійний футболіст, власник ліцензії UEFA. Кожне його тренування допомагає радіти маленьким перемогам та полюбити спорт.</p>
         <span class="team-more"><span class="lang-en">My story</span><span class="lang-uk">Моя історія</span> →</span>
         <div class="team-story" hidden>
           <p class="lang-en">I am a former professional footballer and a UEFA license holder. Over the years of my career I played at the professional level and gained deep experience that I now pass on to children through modern, effective training.</p>
@@ -1369,8 +1417,10 @@ html[data-lang="uk"] .lang-en{display:none !important;}
     <div class="team-modal" id="teamModal" role="dialog" aria-modal="true" aria-label="Teacher story" hidden>
       <div class="tm-backdrop" data-tm-close></div>
       <div class="tm-card">
-        <button type="button" class="tm-close" aria-label="Close" data-tm-close>✕</button>
-        <div class="tm-photo"><img id="tmPhoto" src="" alt=""></div>
+        <div class="tm-photo">
+          <button type="button" class="tm-close" aria-label="Close" data-tm-close>✕</button>
+          <img id="tmPhoto" src="" alt="">
+        </div>
         <div class="tm-body">
           <h3 id="tmName"></h3>
           <div class="role" id="tmRole"></div>
@@ -1386,77 +1436,66 @@ html[data-lang="uk"] .lang-en{display:none !important;}
   <div class="container">
     <div class="section-head reveal">
       <span class="eyebrow" style="background:rgba(77,150,255,.14); color:#1a5fd6;">
-        <span class="lang-en">Age Groups</span><span class="lang-uk">Групи за віком</span>
+        <span class="lang-en">Our Groups</span><span class="lang-uk">Наші групи</span>
       </span>
-      <h2><span class="lang-en">A path for every age</span><span class="lang-uk">Свій шлях для кожного віку</span></h2>
-      <p><span class="lang-en">From first steps to school readiness: four warm programs, each tailored to its age.</span><span class="lang-uk">Від перших кроків до підготовки до школи: чотири програми, кожна для свого віку.</span></p>
+      <h2><span class="lang-en">A caring space for every child</span><span class="lang-uk">Затишний простір для кожної дитини</span></h2>
+      <p><span class="lang-en">Three warm groups, each with its own gentle daily rhythm.</span><span class="lang-uk">Три турботливі групи, кожна зі своїм ритмом дня.</span></p>
     </div>
 
-    <div class="ages-tabs" role="tablist" aria-label="Age groups">
-      <button class="age-tab" role="tab" aria-selected="true" data-age="toddlers"><span class="lang-en">Toddlers 2–3</span><span class="lang-uk">Малята 2–3</span></button>
-      <button class="age-tab" role="tab" aria-selected="false" data-age="preschool"><span class="lang-en">Preschool 4–5</span><span class="lang-uk">Дошкільнята 4–5</span></button>
-      <button class="age-tab" role="tab" aria-selected="false" data-age="prek"><span class="lang-en">Pre-K 5–6</span><span class="lang-uk">Підготовка 5–6</span></button>
-      <button class="age-tab" role="tab" aria-selected="false" data-age="aftercare"><span class="lang-en">Aftercare 6–12</span><span class="lang-uk">Продовжений день 6–12</span></button>
+    <div class="ages-tabs" role="tablist" aria-label="Groups">
+      <button class="age-tab" role="tab" aria-selected="true" data-age="toddlers"><span class="lang-en">Toddlers</span><span class="lang-uk">Малята</span></button>
+      <button class="age-tab" role="tab" aria-selected="false" data-age="preschool"><span class="lang-en">Preschool</span><span class="lang-uk">Дошкільнята</span></button>
+      <button class="age-tab" role="tab" aria-selected="false" data-age="afterschool"><span class="lang-en">After-School</span><span class="lang-uk">Школярі</span></button>
     </div>
 
     <div class="age-panels">
       <div class="age-panel active" data-panel="toddlers">
-        <img src="img/site/toddler-1.jpg" alt="Toddler exploring a picture book on the carpet" loading="lazy" width="600" height="480">
+        <img src="img/site/toddler-1.jpg" alt="A young child exploring a picture book" loading="lazy" width="600" height="480">
         <div class="info">
-          <span class="range lang-en">Toddlers · Ages 2–3</span><span class="range lang-uk">Малята · 2–3 роки</span>
           <h3 class="lang-en">Toddlers</h3><h3 class="lang-uk">Малята</h3>
-          <p class="lang-en">A gentle first classroom where our youngest children explore language and textures at their own pace.</p>
-          <p class="lang-uk">Ніжний, сенсорно насичений світ, де наймолодші досліджують мову, текстури та ритм у власному темпі.</p>
+          <p class="lang-en">A warm, caring space where every day is full of play, discovery, and gentle first learning.</p>
+          <p class="lang-uk">Тепле, дбайливе середовище, де кожен день сповнений гри, відкриттів і перших ніжних кроків у навчанні.</p>
           <ul>
-            <li><span class="chk">✓</span><span><span class="lang-en">Warm daily routine with rest &amp; nutrition</span><span class="lang-uk">Теплий режим дня зі сном та харчуванням</span></span></li>
-            <li><span class="chk">✓</span><span><span class="lang-en">Multilingual language development</span><span class="lang-uk">Ранній багатомовний розвиток</span></span></li>
-            <li><span class="chk">✓</span><span><span class="lang-en">Sensory play &amp; fine-motor exploration</span><span class="lang-uk">Сенсорні ігри та розвиток дрібної моторики</span></span></li>
-            <li><span class="chk">✓</span><span><span class="lang-en">Low teacher-to-child ratio for close attention</span><span class="lang-uk">Невелике співвідношення вихователь / дитина</span></span></li>
+            <li><span class="chk">✓</span><span><span class="lang-en">Fresh, wholesome food three times a day, plus healthy snacks on request</span><span class="lang-uk">Свіжа корисна їжа тричі на день, за бажанням — здорові снеки</span></span></li>
+            <li><span class="chk">✓</span><span><span class="lang-en">A daily nap to soft classical music</span><span class="lang-uk">Обов'язковий денний сон під класичну музику</span></span></li>
+            <li><span class="chk">✓</span><span><span class="lang-en">Plenty of fresh air, play, and games for development and socializing</span><span class="lang-uk">Багато часу на свіжому повітрі, ігри та розваги для розвитку й соціалізації</span></span></li>
+            <li><span class="chk">✓</span><span><span class="lang-en">First self-care and hygiene skills</span><span class="lang-uk">Перші навички самообслуговування та гігієни</span></span></li>
+            <li><span class="chk">✓</span><span><span class="lang-en">Focus on speech, physical activity, and cognitive growth</span><span class="lang-uk">Особлива увага мовленню, фізичній активності та когнітивному розвитку</span></span></li>
+            <li><span class="chk">✓</span><span><span class="lang-en">Creativity: drawing, sculpting, and music — singing, dancing, little performances</span><span class="lang-uk">Творчість: малювання, ліплення та музика — співи, танці, участь у виставах</span></span></li>
           </ul>
         </div>
       </div>
 
       <div class="age-panel" data-panel="preschool">
-        <img src="img/site/classroom-1.jpg" alt="Preschool teacher engaging with a circle of children" loading="lazy" width="600" height="480">
+        <img src="img/site/art-3.jpg" alt="Preschoolers painting and creating together" loading="lazy" width="600" height="480">
         <div class="info">
-          <span class="range lang-en">Preschool · Ages 4–5</span><span class="range lang-uk">Дошкільнята · 4–5 років</span>
           <h3 class="lang-en">Preschool</h3><h3 class="lang-uk">Дошкільнята</h3>
-          <p class="lang-en">Playful but structured days that build social confidence and a real love of books in both languages.</p>
-          <p class="lang-uk">Структуровані та ігрові заняття, що розвивають соціальну впевненість, творчість і любов до двомовного читання.</p>
+          <p class="lang-en">Children grow together — learning to make friends, express themselves, and get ready for school.</p>
+          <p class="lang-uk">Діти ростуть у колективі — вчаться дружити, виражати себе та готуються до школи.</p>
           <ul>
-            <li><span class="chk">✓</span><span><span class="lang-en">Structured daily activities</span><span class="lang-uk">Структуровані заняття</span></span></li>
-            <li><span class="chk">✓</span><span><span class="lang-en">Art, music &amp; social skills building</span><span class="lang-uk">Арт, музика, соціальні навички</span></span></li>
-            <li><span class="chk">✓</span><span><span class="lang-en">Bilingual storytime &amp; early reading</span><span class="lang-uk">Двомовне читання</span></span></li>
+            <li><span class="chk">✓</span><span><span class="lang-en">Fresh food three times a day &amp; snacks, and a nap to classical music</span><span class="lang-uk">Свіжа їжа тричі на день та снеки, денний сон під класичну музику</span></span></li>
+            <li><span class="chk">✓</span><span><span class="lang-en">Fresh air, play, and games for development and socializing</span><span class="lang-uk">Свіже повітря, ігри та розваги для розвитку й соціалізації</span></span></li>
+            <li><span class="chk">✓</span><span><span class="lang-en">Life in a group: self-expression, first rules of behavior, and empathy through role-play</span><span class="lang-uk">Спілкування в колективі, самовираження, основи поведінки та емпатія через рольові ігри</span></span></li>
+            <li><span class="chk">✓</span><span><span class="lang-en">Art class: drawing, sensory play, sculpting, collage, and bead-threading, suited to each child</span><span class="lang-uk">Арт-клас: малювання, сенсорні ігри, ліплення, аплікації, нанизування намистин — відповідно до віку</span></span></li>
+            <li><span class="chk">✓</span><span><span class="lang-en">Daily storytime with discussion, and a music class — songs, poems, dances, performances</span><span class="lang-uk">Щоденне читання казок з обговоренням та музичний клас — пісні, вірші, танці, вистави</span></span></li>
+            <li><span class="chk">✓</span><span><span class="lang-en">Early literacy and counting — school is just ahead</span><span class="lang-uk">Додаткові заняття грамотою та рахуванням — попереду шкільне життя</span></span></li>
+            <li><span class="chk">✓</span><span><span class="lang-en">Physical activity: mini-soccer, children's yoga, and gymnastics</span><span class="lang-uk">Фізична активність: мініфутбол, дитяча йога, гімнастика</span></span></li>
           </ul>
         </div>
       </div>
 
-      <div class="age-panel" data-panel="prek">
-        <img src="img/site/stem-1.jpg" alt="Teacher helping preschoolers with letters and numbers" loading="lazy" width="600" height="480">
+      <div class="age-panel" data-panel="afterschool">
+        <img src="img/site/reading-1.jpg" alt="A teacher helping school-age children after class" loading="lazy" width="600" height="480">
         <div class="info">
-          <span class="range lang-en">Pre-K · Ages 5–6</span><span class="range lang-uk">Підготовка до школи · 5–6 років</span>
-          <h3 class="lang-en">Pre-K Readiness</h3><h3 class="lang-uk">Підготовка до школи</h3>
-          <p class="lang-en">Literacy in two languages, early math, and the confidence every child needs walking into kindergarten.</p>
-          <p class="lang-uk">Грамота двома мовами, математика, письмо та впевненість, потрібна перед вступом до американської школи.</p>
+          <h3 class="lang-en">After-School</h3><h3 class="lang-uk">Школярі після занять</h3>
+          <p class="lang-en">After the school day — a warm welcome, a fresh meal, and time for creativity, sport, and rest.</p>
+          <p class="lang-uk">Після шкільного дня — тепла зустріч, свіжий обід і час для творчості, спорту та відпочинку.</p>
           <ul>
-            <li><span class="chk">✓</span><span><span class="lang-en">Multilingual literacy</span><span class="lang-uk">Багатомовна грамота</span></span></li>
-            <li><span class="chk">✓</span><span><span class="lang-en">Math &amp; early writing skills</span><span class="lang-uk">Математика, письмо</span></span></li>
-            <li><span class="chk">✓</span><span><span class="lang-en">Kindergarten-readiness preparation</span><span class="lang-uk">Підготовка до американської школи</span></span></li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="age-panel" data-panel="aftercare">
-        <img src="img/site/reading-1.jpg" alt="Teacher reading a storybook to a small group of children" loading="lazy" width="600" height="480">
-        <div class="info">
-          <span class="range lang-en">Aftercare · Ages 6–12</span><span class="range lang-uk">Продовжений день · 6–12 років</span>
-          <h3 class="lang-en">Aftercare</h3><h3 class="lang-uk">Група продовженого дня</h3>
-          <p class="lang-en">Homework help, language lessons, and creative activities in a relaxed environment after the school day ends.</p>
-          <p class="lang-uk">Допомога з домашніми завданнями, мовні заняття та творчі активності після школи.</p>
-          <ul>
-            <li><span class="chk">✓</span><span><span class="lang-en">Homework support</span><span class="lang-uk">Допомога з домашніми завданнями</span></span></li>
-            <li><span class="chk">✓</span><span><span class="lang-en">Language classes &amp; creative activities</span><span class="lang-uk">Мовні заняття, творчі активності</span></span></li>
-            <li><span class="chk">✓</span><span><span class="lang-en">Open after school until 6–7 PM</span><span class="lang-uk">Час роботи: після школи до 18:00–19:00</span></span></li>
+            <li><span class="chk">✓</span><span><span class="lang-en">A warm, fresh lunch on arrival</span><span class="lang-uk">Теплий свіжий обід при зустрічі</span></span></li>
+            <li><span class="chk">✓</span><span><span class="lang-en">Music sessions — everyone dances, sings, and performs</span><span class="lang-uk">Музичні заняття — усі танцюють, співають, беруть участь у виставах</span></span></li>
+            <li><span class="chk">✓</span><span><span class="lang-en">Homework help with our teacher (when there is any)</span><span class="lang-uk">Виконання домашнього завдання з нашим учителем (якщо є)</span></span></li>
+            <li><span class="chk">✓</span><span><span class="lang-en">Mini-soccer and children's yoga</span><span class="lang-uk">Мініфутбол та дитяча йога</span></span></li>
+            <li><span class="chk">✓</span><span><span class="lang-en">Board games and free time on the playground</span><span class="lang-uk">Настільні ігри та вільний час на майданчику</span></span></li>
           </ul>
         </div>
       </div>
@@ -1695,24 +1734,15 @@ html[data-lang="uk"] .lang-en{display:none !important;}
     </div>
 
     <div class="mandatory-box reveal-scale">
-      <h3><svg class="ico a-pulse" style="color:#4a3600"><use href="#i-warn"/></svg> <span class="lang-en">Mandatory Enrollment Forms</span><span class="lang-uk">Обов'язкові форми для запису</span></h3>
-      <p><span class="lang-en">The State of Florida requires 8 forms. Our team will send digital copies once your pre-registration is received, so there is nothing to prepare right now.</span><span class="lang-uk">Штат Флорида вимагає 8 форм. Ми надішлемо цифрові копії після отримання попередньої реєстрації, тож зараз нічого готувати не потрібно.</span></p>
-      <button type="button" class="forms-toggle" id="formsToggle" aria-expanded="false" aria-controls="formsCollapse">
-        <span class="lang-en">View the full list of forms</span><span class="lang-uk">Переглянути повний список форм</span>
-        <svg class="ico sm"><use href="#i-chev"/></svg>
-      </button>
-      <div class="forms-collapse" id="formsCollapse">
-      <div class="forms-grid">
-        <div class="form-item"><span class="fnum">1</span><span><span class="lang-en">Child Enrollment Application</span><span class="lang-uk">Заява про зарахування</span></span></div>
-        <div class="form-item"><span class="fnum">2</span><span><span class="lang-en">Health Examination Form (Florida DCF)</span><span class="lang-uk">Медичний огляд (Florida DCF)</span></span></div>
-        <div class="form-item"><span class="fnum">3</span><span><span class="lang-en">Immunization Record (Florida Form 680)</span><span class="lang-uk">Картка щеплень (Florida Form 680)</span></span></div>
-        <div class="form-item"><span class="fnum">4</span><span><span class="lang-en">Authorization for Emergency Medical Treatment</span><span class="lang-uk">Дозвіл на екстрену медичну допомогу</span></span></div>
-        <div class="form-item"><span class="fnum">5</span><span><span class="lang-en">Pick-Up Authorization Form</span><span class="lang-uk">Список осіб для забирання дитини</span></span></div>
-        <div class="form-item"><span class="fnum">6</span><span><span class="lang-en">Media Release / Photo Permission</span><span class="lang-uk">Дозвіл на фото та відео</span></span></div>
-        <div class="form-item"><span class="fnum">7</span><span><span class="lang-en">Allergy &amp; Dietary Restriction Form</span><span class="lang-uk">Форма алергій та харчових обмежень</span></span></div>
-        <div class="form-item"><span class="fnum">8</span><span><span class="lang-en">Medication Administration Form (if needed)</span><span class="lang-uk">Дозвіл на прийом ліків (за потреби)</span></span></div>
-      </div>
-      </div>
+      <h3><svg class="ico a-pulse" style="color:#4a3600"><use href="#i-warn"/></svg> <span class="lang-en">Mandatory Enrollment Form</span><span class="lang-uk">Обов'язкова форма для запису</span></h3>
+      <a class="form-download" href="enrollment_forms.pdf" target="_blank" rel="noopener" download>
+        <span class="fd-ico"><svg class="ico lg"><use href="#i-doc"/></svg></span>
+        <span class="fd-text">
+          <strong><span class="lang-en">Enrollment Agreement</span><span class="lang-uk">Договір про зарахування (Enrollment Agreement)</span></strong>
+          <small><span class="lang-en">PDF · 4 pages</span><span class="lang-uk">PDF · 4 сторінки</span></small>
+        </span>
+        <span class="fd-btn"><svg class="ico sm"><use href="#i-down"/></svg> <span class="lang-en">Download</span><span class="lang-uk">Завантажити</span></span>
+      </a>
     </div>
 
     <div class="enroll-grid">
@@ -1761,7 +1791,6 @@ html[data-lang="uk"] .lang-en{display:none !important;}
           <button type="submit" class="submit-btn">
             <span class="lang-en">Pre-Enroll Today</span><span class="lang-uk">Записатись сьогодні</span> <span aria-hidden="true">🌸</span>
           </button>
-          <p class="form-note"><span class="lang-en">Takes one minute. No commitment, and no payment details needed.</span><span class="lang-uk">Займе одну хвилину. Ні до чого не зобов'язує, платіжні дані не потрібні.</span></p>
 
           <div class="form-success" id="preregSuccess">
             <div class="success-badge">✓</div>
@@ -1863,7 +1892,7 @@ html[data-lang="uk"] .lang-en{display:none !important;}
 <!-- Sticky mobile CTA -->
 <div class="sticky-cta" id="stickyCta" aria-hidden="true">
   <a href="tel:+12407061704" class="call-btn" aria-label="Call us"><svg class="ico"><use href="#i-phone"/></svg></a>
-  <a href="#enroll" class="cta-btn"><span class="lang-en">Book a Free Tour</span><span class="lang-uk">Записатись на екскурсію</span></a>
+  <a href="#enroll" class="cta-btn"><span class="lang-en">Register</span><span class="lang-uk">Зареєструватись</span></a>
 </div>
 
 <script>
@@ -2092,17 +2121,12 @@ html[data-lang="uk"] .lang-en{display:none !important;}
       var originalHTML = btn.innerHTML;
       btn.disabled = true;
       btn.innerHTML = (root.getAttribute('data-lang')==='uk' ? 'Надсилаємо…' : 'Sending…');
-
-      /*
-        Integration-ready stub — wire this fetch() to your endpoint of choice:
-        Google Sheets (Apps Script Web App), Airtable API, or Supabase REST/Edge Function.
-        Example:
-        fetch('https://YOUR-ENDPOINT', {
+        fetch('https://script.google.com/macros/s/AKfycbxyoA9Cx2kEqeicSgXr2BKKHszLYzayrPwwLj58_58Zuvqwrv4qerYtbwujuLrPz8qb/exec', {
           method:'POST',
           headers:{'Content-Type':'application/json'},
           body: JSON.stringify(Object.fromEntries(new FormData(form)))
         })
-      */
+    
       setTimeout(function(){
         btn.disabled = false;
         btn.innerHTML = originalHTML;
@@ -2185,7 +2209,26 @@ html[data-lang="uk"] .lang-en{display:none !important;}
     updateTeamNav();
   }
 
-  /* ---------- Programs accordion ---------- */
+  /* ---------- Programs accordion (JS height animation) ---------- */
+  function openProgram(card){
+    var detail = card.querySelector('.program-detail');
+    card.classList.add('open');
+    card.querySelector('.program-head').setAttribute('aria-expanded','true');
+    detail.style.height = detail.scrollHeight + 'px';
+    var onEnd = function(e){
+      if(e.propertyName !== 'height') return;
+      detail.removeEventListener('transitionend', onEnd);
+      if(card.classList.contains('open')) detail.style.height = 'auto'; // adapt to resize/lang
+    };
+    detail.addEventListener('transitionend', onEnd);
+  }
+  function closeProgram(card){
+    var detail = card.querySelector('.program-detail');
+    detail.style.height = detail.scrollHeight + 'px'; // from auto → fixed px so it can animate to 0
+    card.classList.remove('open');
+    card.querySelector('.program-head').setAttribute('aria-expanded','false');
+    requestAnimationFrame(function(){ requestAnimationFrame(function(){ detail.style.height = '0px'; }); });
+  }
   var programCards = document.querySelectorAll('.program-card');
   programCards.forEach(function(card){
     var head = card.querySelector('.program-head');
@@ -2193,15 +2236,10 @@ html[data-lang="uk"] .lang-en{display:none !important;}
     if(!head || !detail) return;
     head.addEventListener('click', function(){
       var isOpen = card.classList.contains('open');
-      // close others (one open at a time keeps the grid tidy)
       programCards.forEach(function(other){
-        if(other !== card && other.classList.contains('open')){
-          other.classList.remove('open');
-          other.querySelector('.program-head').setAttribute('aria-expanded','false');
-        }
+        if(other !== card && other.classList.contains('open')) closeProgram(other);
       });
-      card.classList.toggle('open', !isOpen);
-      head.setAttribute('aria-expanded', !isOpen ? 'true' : 'false');
+      if(isOpen) closeProgram(card); else openProgram(card);
     });
   });
 
