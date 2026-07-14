@@ -2100,6 +2100,7 @@ html[data-lang="uk"] .lang-en{display:none !important;}
   function wireForm(formId, successId){
     var form = document.getElementById(formId);
     if(!form) return;
+    var root = document.documentElement;
     var success = document.getElementById(successId);
     var requiredFields = form.querySelectorAll('input[required], textarea[required], select[required]');
     requiredFields.forEach(function(f){
