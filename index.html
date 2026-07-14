@@ -2122,20 +2122,38 @@ html[data-lang="uk"] .lang-en{display:none !important;}
       var originalHTML = btn.innerHTML;
       btn.disabled = true;
       btn.innerHTML = (root.getAttribute('data-lang')==='uk' ? 'Надсилаємо…' : 'Sending…');
-        fetch('https://script.google.com/macros/s/AKfycbxyoA9Cx2kEqeicSgXr2BKKHszLYzayrPwwLj58_58Zuvqwrv4qerYtbwujuLrPz8qb/exec', {
-          method:'POST',
-          headers:{'Content-Type':'application/json'},
-          body: JSON.stringify(Object.fromEntries(new FormData(form)))
-        })
-    
-      setTimeout(function(){
+      fetch('https://script.google.com/macros/s/AKfycbxyoA9Cx2kEqeicSgXr2BKKHszLYzayrPwwLj58_58Zuvqwrv4qerYtbwujuLrPz8qb/exec', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(Object.fromEntries(new FormData(form)))
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Server error');
+        }
+      
         btn.disabled = false;
         btn.innerHTML = originalHTML;
+      
         form.classList.add('submitted');
         success.classList.add('show');
         success.setAttribute('tabindex','-1');
         success.focus();
-      }, 900);
+      })
+      .catch(error => {
+        console.error(error);
+      
+        btn.disabled = false;
+        btn.innerHTML = originalHTML;
+      
+        alert(
+          root.getAttribute('data-lang') === 'uk'
+            ? 'Помилка надсилання форми.'
+            : 'Failed to send the form.'
+        );
+      });
     });
   }
   wireForm('preregForm','preregSuccess');
